@@ -15,7 +15,7 @@
     */
     // conexion a mysql
     $host       = 'localhost';
-    $database   = 'gmas';
+    $database   = 'fonjuprof';
     $user       = 'root';
     $passwd     = '';
     $port       = '3306';
@@ -23,7 +23,7 @@
     class datosConexion {
     //////////////////MYSQL///////////////////////
         protected $servidorMy   =   "localhost";
-        protected $dbMy         =   "gmas";
+        protected $dbMy         =   "fonjuprof";
         protected $usuarioMy    =   "root";
         protected $claveMy      =   "";
         protected $puertoMy     =   "3306";

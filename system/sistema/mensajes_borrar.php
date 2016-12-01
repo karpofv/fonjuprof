@@ -74,7 +74,7 @@ if (is_file("../estmovil/apps/fotos/$cedula_est.jpg")) {
     $FOTO = 'images/icono_perfil.gif';
 } ?>
 <body>
-    <div id="loading"><img src="assets-minified/images/spinner/loader-dark.gif" alt="Loading..."></div>
+    <div id="loading"><img src="assets/img/ajax-loader.gif" alt="Loading..."></div>
     <div id="ventanaVer" style="background:url(images/fondoventana.png) no-repeat;background-size:100%;height: 100%;position: fixed;margin: auto auto auto;width: 100%;z-index: 9000;height: auto;"></div>
     <div id="sb-site">
         <div id="page-wrapper">

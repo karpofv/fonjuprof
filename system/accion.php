@@ -8,7 +8,15 @@
       header ("Location: $redir?error_login=5");
       exit;
     }
-
+	/*Se incluye archivo auth para autentificar la sesion*/
+    if ($_GET[salir]=='1') {
+        session_cache_limiter('nocache,private');
+        session_name($sess_name);
+        session_start();
+        $sid = session_id();
+        session_destroy();
+        header ("Location: ../index.php");        
+    }
     $permiso = $_SESSION['usuario_login'];
     include_once ('../includes/conexion.php');
     include_once ('../includes/chat.php');
@@ -23,14 +31,7 @@
     include_once '../includes/validation.php';
     include_once '../includes/conexion.php';
     include_once('modelo/menu/class.menu.php');
-    include_once('modelo/chat/chatusuarios.php');
     include_once('modelo/datosPersonales/class.datosPersonales.php');
-    include_once('modelo/clinicas/class.clinicas.php');
-    include_once('modelo/documentos/class.documentos.php');
-    include_once('modelo/requisicion/class.requisicion.php');
-    include_once '../includes/mensajes.php';
-    include_once '../includes/combos.php';
-    include_once '../includes/recibo.php';
 
     $consultasMenu = new paraTodos();
 
@@ -42,6 +43,7 @@
     * Esto trae los datos del empleado
     */
     $cedula=$_SESSION['ci'];
+    $datosEmp     = DatosPersonales::datosEmpleado($cedula);
     $sid = session_id($sid);
     $update=update_sessions();
     //$consultasMenu->arrayInserte("time, sid, username, status, Cedula","chat_sessions","'time()', '$sid', '$permiso', '1', '$cedula'");
@@ -54,13 +56,14 @@
             $_SESSION[dmn]=$_GET[dmn];            
         }
     }
-    $ruta = "http://www.unellez.edu.ve/portal/servicios/siproma/sistema/fotos/".$_SESSION[ci].".jpg";
+    /*$ruta = "http://www.unellez.edu.ve/portal/servicios/siproma/sistema/fotos/".$_SESSION[ci].".jpg";
     $urlexists = paraTodos::url_exists($ruta );
     if ($urlexists == 'true') {
       $FOTO = "http://www.unellez.edu.ve/portal/servicios/siproma/sistema/fotos/".$_SESSION[ci].".jpg";
     } else {
       $FOTO="../assets-minified/images/icono_perfil.png";
-    }
+    }*/
+    $FOTO="../assets/img/avatar5.png";
     $act=$_POST[act];
     if ($act=='') {
       $act=$_GET[act];
@@ -124,5 +127,5 @@
     @mysql_close();
     ?>
   <script type="text/javascript">
-    var cargando = '<center><img style="margin-top: 10px;height:30px;width:30px;" src="../assets-minified/images/spinner/loader-dark.gif" border="0"> Cargando...</center>';
+    var cargando = '<center><img style="margin-top: 10px;height:30px;width:30px;" src="../assets/img/ajax-loader.gif" border="0"> Cargando...</center>';
   </script>

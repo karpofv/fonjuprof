@@ -6,15 +6,15 @@ class Menu {
         ?>
         <li class="divider"></li>
         <!--<li class="treeview"><a href="accion.php?dmn=112" title="Mi Perfil"><i class="glyph-icon icon-user"></i> <span>Mi Perfil </span></a></li> -->
-        <li class="treeview"><a  onclick="$.ajax({ type: 'POST', url: 'accion.php', ajaxSend: $('#verContenido').html(cargando),
+        <li class="treeview"><a  onclick="$.ajax({ type: 'POST', url: 'accion.php', ajaxSend: $('#page-content').html(cargando),
                       data: 'dmn=356',
-                      success: function(html) { $('#nova').show('');$('#verContenido').html(html); }
+                      success: function(html) { $('#nova').show('');$('#page-content').html(html); }
                     });  return false;" href="javascript: void(0);" title="Solicitudes"><i class="glyph-icon icon-paste"></i> <span>Documentos</span>
             </a>
         </li>
-        <li class="treeview"><a onclick="$.ajax({ type: 'POST', url: 'accion.php', ajaxSend: $('#verContenido').html(cargando),
+        <li class="treeview"><a onclick="$.ajax({ type: 'POST', url: 'accion.php', ajaxSend: $('#page-content').html(cargando),
                             data: 'dmn=121',
-                            success: function(html) { $('#nova').show('');$('#verContenido').html(html); },
+                            success: function(html) { $('#nova').show('');$('#page-content').html(html); },
                             error: function(xhr,msg,excep) { alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep); }
                             }); return false;" href="javascript: void(0);" title="Mensajes">
                 <i class="glyph-icon icon-envelope-o"></i> <span>Mensajes</span></a>
@@ -65,11 +65,18 @@ class Menu {
                             }
                             ?>
                             <li class="treeview"><a title="Pulse para ejecutar (<?php echo $filasSubMenud['menu']; ?>)"
-                            onclick="$.ajax({ type: 'POST', url: 'accion.php', ajaxSend: $('#verContenido').html(cargando),
-                            data: 'dmn=<?php echo $filasSubMenud[id]; ?>&ver=2',
-                            success: function(html) { $('#verContenido').html(html); },
-                            error: function(xhr,msg,excep) { alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep); }
-                            }); return false;" href="javascript: void(0);">
+                            onclick="$.ajax({
+                                        type: 'POST',
+                                        url: 'accion.php',
+                                        ajaxSend: $('#page-content').html(cargando),
+                                        data: 'dmn=<?php echo $filasSubMenud[id]; ?>&ver=2',
+                                        success: function(html) {
+                                            $('#page-content').html(html);
+                                        },
+                                        error: function(xhr,msg,excep) {
+                                            alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep);
+                                        }
+                                    }); return false;" href="javascript: void(0);">
                                 <span><?php echo $empresaSMenu; ?></span>
                             </a></li>
                             <?php

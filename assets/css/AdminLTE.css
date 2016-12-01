@@ -339,6 +339,8 @@ body > .header .navbar {
   height: 50px;
   margin-bottom: 0;
   margin-left: 220px;
+    position: fixed;
+    width: 85%;
 }
 body > .header .navbar .sidebar-toggle {
   float: left;
@@ -405,6 +407,7 @@ body > .header .logo {
   font-weight: 500;
   height: 50px;
   display: block;
+    position: fixed;
 }
 body > .header .logo .icon {
   margin-right: 10px;
@@ -2655,6 +2658,7 @@ Component: timeline
 }
 .skin-black .left-side {
   background: #333;
+    position: fixed;
 }
 .skin-black .sidebar a {
   color: #eee;
