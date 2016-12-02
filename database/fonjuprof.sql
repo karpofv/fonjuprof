@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-12-2016 a las 18:19:13
+-- Tiempo de generación: 02-12-2016 a las 20:58:07
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 5.6.28
 
@@ -23,6 +23,89 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `amort_esp`
+--
+
+CREATE TABLE `amort_esp` (
+  `PREST` int(11) DEFAULT NULL,
+  `ID` decimal(10,0) NOT NULL,
+  `INSTT` int(11) DEFAULT NULL,
+  `MONTO` decimal(10,0) DEFAULT NULL,
+  `TASA` decimal(10,0) DEFAULT NULL,
+  `VENC` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `PAGADA_EL` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `CANC` decimal(10,0) DEFAULT NULL,
+  `INT` decimal(10,0) DEFAULT NULL,
+  `ABONO` decimal(10,0) DEFAULT NULL,
+  `PAGO` decimal(10,0) DEFAULT NULL,
+  `RESTA` decimal(10,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Volcado de datos para la tabla `amort_esp`
+--
+
+INSERT INTO `amort_esp` (`PREST`, `ID`, `INSTT`, `MONTO`, `TASA`, `VENC`, `PAGADA_EL`, `CANC`, `INT`, `ABONO`, `PAGO`, `RESTA`) VALUES
+(3233, '1', NULL, '1222', '1', '31/07/2011', '18/10/2011', '1222', '974', '247', '247', '35183');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `amort_nor`
+--
+
+CREATE TABLE `amort_nor` (
+  `PREST` int(11) DEFAULT NULL,
+  `ID` int(11) NOT NULL,
+  `INSTT` int(11) DEFAULT NULL,
+  `MONTO` int(11) DEFAULT NULL,
+  `TASA` int(11) DEFAULT NULL,
+  `VENC` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `PAGADA_EL` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `CANC` int(11) DEFAULT NULL,
+  `INT` int(11) DEFAULT NULL,
+  `ABONO` int(11) DEFAULT NULL,
+  `PAGO` int(11) DEFAULT NULL,
+  `RESTA` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asoc`
+--
+
+CREATE TABLE `asoc` (
+  `INSTT` int(11) DEFAULT NULL,
+  `ID` int(11) NOT NULL,
+  `FRECUENCIA` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `P_IR_SOL_PREST_X_VA` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `ORIGEN` varchar(70) COLLATE utf8_bin DEFAULT NULL,
+  `CEDULA` varchar(14) COLLATE utf8_bin DEFAULT NULL,
+  `NAME` varchar(35) COLLATE utf8_bin DEFAULT NULL,
+  `TELEFONO` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `CODIGO` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `CORREO` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `INGRESO` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `APT_PERS_CANC` int(11) DEFAULT NULL,
+  `APT_PERS_PDT` int(11) DEFAULT NULL,
+  `APT_PAT_CANC` int(11) DEFAULT NULL,
+  `APT_PAT_PDT` int(11) DEFAULT NULL,
+  `APT_VOL` int(11) DEFAULT NULL,
+  `AHORRADO` int(11) DEFAULT NULL,
+  `DEUDA` int(11) DEFAULT NULL,
+  `FIANZAS` int(11) DEFAULT NULL,
+  `CUOTAS_VENC` int(11) DEFAULT NULL,
+  `DISP` int(11) DEFAULT NULL,
+  `ULT_RET_80` int(11) DEFAULT NULL,
+  `ULT_RET_50` int(11) DEFAULT NULL,
+  `ULT_RET_25` int(11) DEFAULT NULL,
+  `ULT_RET_20` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `auditar`
 --
 
@@ -35,6 +118,24 @@ CREATE TABLE `auditar` (
   `Fecha` date NOT NULL,
   `Hora` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Auditor Planilla';
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `carg_fam`
+--
+
+CREATE TABLE `carg_fam` (
+  `ID` int(11) NOT NULL,
+  `INSTT` int(11) DEFAULT NULL,
+  `CEDULA_ASOC` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `P_IR_ASOCIADO` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `ASOC` int(11) DEFAULT NULL,
+  `PARENTESCOS` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `CEDULA` int(11) DEFAULT NULL,
+  `NAME` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `FECHA_NAC` varchar(50) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1640,6 +1741,22 @@ INSERT INTO `c_parroquia` (`id`, `Parroquia`, `idMunicipio`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `dividendos`
+--
+
+CREATE TABLE `dividendos` (
+  `INSTT` int(11) DEFAULT NULL,
+  `CEDULA` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `P_IR_ASOCIADO` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `ASOC` int(11) DEFAULT NULL,
+  `ID` int(11) NOT NULL,
+  `MONTO` int(11) DEFAULT NULL,
+  `ANIO` varchar(50) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `menu_emp`
 --
 
@@ -1870,6 +1987,35 @@ INSERT INTO `perfiles_det` (`id`, `IdPerfil`, `Submenu`, `Menu`, `S`, `U`, `D`, 
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `prest`
+--
+
+CREATE TABLE `prest` (
+  `ID` int(11) NOT NULL,
+  `INSTT` int(11) DEFAULT NULL,
+  `ASOC` int(11) DEFAULT NULL,
+  `P_IR_ASOCIADO` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `CEDULA` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `TP_PREST` int(11) DEFAULT NULL,
+  `SOLICITADO` int(11) DEFAULT NULL,
+  `CANC_NORM` int(11) DEFAULT NULL,
+  `CANC_ESP` int(11) DEFAULT NULL,
+  `PDT_NORM` int(11) DEFAULT NULL,
+  `PDT_ESP` int(11) DEFAULT NULL,
+  `CTAS_NORM` int(11) DEFAULT NULL,
+  `CTAS_ESP` int(11) DEFAULT NULL,
+  `INICIO_NORM` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `INICIO_ESP` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `CREADO_EL` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `CREADO_POR` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `TP_PREST_N` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `AFECT_DISP` set('true','false') COLLATE utf8_bin DEFAULT NULL,
+  `CUOTAS` varchar(50) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `recargar`
 --
 
@@ -1933,6 +2079,71 @@ INSERT INTO `sexo` (`id`, `Nombre`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `solict_prest`
+--
+
+CREATE TABLE `solict_prest` (
+  `INSTT` int(11) DEFAULT NULL,
+  `ID` int(11) NOT NULL,
+  `CEDULA` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `ASOC` int(11) DEFAULT NULL,
+  `P_IR_ASOCIADO` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `TP_PREST` int(11) DEFAULT NULL,
+  `ESTATUS` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `NAME` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `FECHA` date DEFAULT NULL,
+  `MONTO` int(11) DEFAULT NULL,
+  `ESTATUS_NAME` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `MTO_X_CTA` int(11) DEFAULT NULL,
+  `OBSV` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `RETORNO_SMS` varchar(50) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `solict_ret_parc`
+--
+
+CREATE TABLE `solict_ret_parc` (
+  `INSTT` int(11) DEFAULT NULL,
+  `ID` int(11) NOT NULL,
+  `NAME` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `CEDULA` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `P_IR_ASOCIADO` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `ESTATUS` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `FECHA` date DEFAULT NULL,
+  `OBSERVACIONES` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `MONTO` decimal(10,0) DEFAULT NULL,
+  `ESTATUS_NAME` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `OBSV` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `RETORNO_SMS` varchar(50) COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tp_prest`
+--
+
+CREATE TABLE `tp_prest` (
+  `ID` int(11) NOT NULL,
+  `INSTT` int(11) DEFAULT NULL,
+  `NAME` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `INTERES` int(11) DEFAULT NULL,
+  `CUONTAS` int(11) DEFAULT NULL,
+  `MTO_MAX` int(11) DEFAULT NULL,
+  `METODO_MORT` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `AFECT_DISP` set('true','false') COLLATE utf8_bin DEFAULT NULL,
+  `SERVICIOS` set('true','false') COLLATE utf8_bin DEFAULT NULL,
+  `REPETIDO` set('true','false') COLLATE utf8_bin DEFAULT NULL,
+  `GASTOS` set('true','false') COLLATE utf8_bin DEFAULT NULL,
+  `CTAS_ESP` set('true','false') COLLATE utf8_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -1958,7 +2169,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `Cedula`, `Usuario`, `contrasena`, `CodSede`, `Tipo`, `Nivel`, `Stilo`, `theme_color`, `Codigo`, `Registro`, `Fecha`, `Observacion`) VALUES
 (9, 19191493, 'ROJASGB', 'a1b995eb2627f17bfd5fcb1de8533c62', '', 'Empleado', '1', 0, '', '6c787', '1', '2016-11-16 09:34:10', NULL),
-(18, 19430853, 'gimonxd', '9593055f40090d0abb8d3d6c7151746b', NULL, 'Empleado', '1', 0, '', '76084', '1', '0000-00-00 00:00:00', NULL),
+(18, 19430853, 'gimonxd', '9593055f40090d0abb8d3d6c7151746b', NULL, 'Empleado', '1', 0, '', 'd6114', '1', '0000-00-00 00:00:00', NULL),
 (25, 19191493, '', '', NULL, '', NULL, 0, '', '6c787', NULL, '0000-00-00 00:00:00', NULL),
 (74, 8573655, 'laya', 'a1b995eb2627f17bfd5fcb1de8533c62', NULL, 'Empleado', '2', 0, '', '6ccec', NULL, '0000-00-00 00:00:00', NULL);
 
@@ -1967,10 +2178,36 @@ INSERT INTO `usuarios` (`id`, `Cedula`, `Usuario`, `contrasena`, `CodSede`, `Tip
 --
 
 --
+-- Indices de la tabla `amort_esp`
+--
+ALTER TABLE `amort_esp`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `FK__prest` (`PREST`);
+
+--
+-- Indices de la tabla `amort_nor`
+--
+ALTER TABLE `amort_nor`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indices de la tabla `asoc`
+--
+ALTER TABLE `asoc`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `CEDULA` (`CEDULA`);
+
+--
 -- Indices de la tabla `auditar`
 --
 ALTER TABLE `auditar`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `carg_fam`
+--
+ALTER TABLE `carg_fam`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indices de la tabla `chat`
@@ -1987,6 +2224,12 @@ ALTER TABLE `chat_sessions`
   ADD PRIMARY KEY (`sid`),
   ADD KEY `time` (`time`),
   ADD KEY `status` (`status`);
+
+--
+-- Indices de la tabla `dividendos`
+--
+ALTER TABLE `dividendos`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indices de la tabla `menu_emp`
@@ -2040,6 +2283,12 @@ ALTER TABLE `perfiles_det`
   ADD KEY `Menu` (`Menu`);
 
 --
+-- Indices de la tabla `prest`
+--
+ALTER TABLE `prest`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indices de la tabla `recargar`
 --
 ALTER TABLE `recargar`
@@ -2059,6 +2308,26 @@ ALTER TABLE `sexo`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `solict_prest`
+--
+ALTER TABLE `solict_prest`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `P_IR_ASOCIADO` (`P_IR_ASOCIADO`);
+
+--
+-- Indices de la tabla `solict_ret_parc`
+--
+ALTER TABLE `solict_ret_parc`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `P_IR_ASOCIADO` (`P_IR_ASOCIADO`);
+
+--
+-- Indices de la tabla `tp_prest`
+--
+ALTER TABLE `tp_prest`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -2073,15 +2342,30 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `asoc`
+--
+ALTER TABLE `asoc`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `auditar`
 --
 ALTER TABLE `auditar`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `carg_fam`
+--
+ALTER TABLE `carg_fam`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `chat`
 --
 ALTER TABLE `chat`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `dividendos`
+--
+ALTER TABLE `dividendos`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `menu_emp`
 --
@@ -2113,6 +2397,11 @@ ALTER TABLE `m_menu_emp_sub_menj`
 ALTER TABLE `perfiles_det`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 --
+-- AUTO_INCREMENT de la tabla `prest`
+--
+ALTER TABLE `prest`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `recargar`
 --
 ALTER TABLE `recargar`
@@ -2128,10 +2417,25 @@ ALTER TABLE `registrados`
 ALTER TABLE `sexo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
+-- AUTO_INCREMENT de la tabla `solict_prest`
+--
+ALTER TABLE `solict_prest`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `solict_ret_parc`
+--
+ALTER TABLE `solict_ret_parc`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `tp_prest`
+--
+ALTER TABLE `tp_prest`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 --
 -- Restricciones para tablas volcadas
 --
