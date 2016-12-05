@@ -22,7 +22,7 @@
     $pag_referida = $url[0];
     $redir2 = $pag_referida;
     // chequear si se llama directo al script.    
-    if ($_SERVER['HTTP_REFERER'] == '') {
+    /*if ($_SERVER['HTTP_REFERER'] == '') {
         die(header ("Location:  $redir?error_login=10"));
         exit;
     }
@@ -93,5 +93,5 @@
             Header ("Location: $redir?error_login=9");
             exit;
         }
-    }
+    }*/
 ?>

@@ -135,7 +135,7 @@ class paraTodos {
         return $resultado;
         $conectar = $conexion->cerrarConexionMy();
     }
-	public static function arrayConsultanum($campos,$tablas,$consultas) {
+    public static function arrayConsultanum($campos,$tablas,$consultas) {
      /*
     |--------------------------------------------------------------------------
     | Hacemos la conexion a MYSQL
@@ -144,8 +144,9 @@ class paraTodos {
     |--------------------------------------------------------------------------
     */
         $conexion = new Conexion();
+        $conectar = $conexion->obtenerConexionMy();
         $sql = ("SELECT $campos FROM $tablas WHERE $consultas");
-        $preparar = $conexion->prepare($sql);
+        $preparar = $conectar->prepare($sql);
         $preparar->execute();
         $resultado = $preparar->rowCount();
         return $resultado;
@@ -210,7 +211,7 @@ class paraTodos {
         $preparar->execute();
         $cuenta = $preparar->rowCount();
         if ($cuenta > 0) { $si='True'; }
-        return $si;
+        return $sql;
         $conectar = $conexion->cerrarConexionMy();
     }
     public static function arrayConsultaPG($campos,$tablas,$consultas) {
@@ -235,26 +236,6 @@ class paraTodos {
           return $resultado;
           $conectar = '';
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     function url_exists( $url = NULL ) {
         if( empty( $url ) ){
             return false;

@@ -14,7 +14,7 @@
     * @date        21/06/2009
     */
     // conexion a mysql
-    $host       = 'terepaima.unellez.edu.ve';
+    $host       = 'localhost';
     $database   = 'fonjuprof';
     $user       = 'root';
     $passwd     = '';
@@ -22,7 +22,7 @@
 
     class datosConexion {
     //////////////////MYSQL///////////////////////
-        protected $servidorMy   =   "terepaima.unellez.edu.ve";
+        protected $servidorMy   =   "localhost";
         protected $dbMy         =   "fonjuprof";
         protected $usuarioMy    =   "root";
         protected $claveMy      =   "";
