@@ -135,6 +135,23 @@ class paraTodos {
         return $resultado;
         $conectar = $conexion->cerrarConexionMy();
     }
+    public static function arrayejecutar($consulta) {
+     /*
+    |--------------------------------------------------------------------------
+    | Hacemos la conexion a MYSQL
+    |--------------------------------------------------------------------------
+    | Esto es para llamar a la conexion en PDO que creamos
+    |--------------------------------------------------------------------------
+    */
+		$conexion = new Conexion();
+		$conectar = $conexion->obtenerConexionMy();
+		$sql = $consulta;
+		$preparar = $conectar->prepare($sql);
+		$preparar->execute();
+		$cuenta = $preparar->rowCount();
+		if ($cuenta > 0) { $si='True'; }
+		return $cuenta;			
+    }	
     public static function arrayConsultanum($campos,$tablas,$consultas) {
      /*
     |--------------------------------------------------------------------------
@@ -202,17 +219,16 @@ class paraTodos {
     |--------------------------------------------------------------------------
     | Esto es para llamar a la conexion en PDO que creamos
     |--------------------------------------------------------------------------
-    */
-        $conexion = new Conexion();
-        $conectar = $conexion->obtenerConexionMy();
-        //echo "DELETE FROM $tabla WHERE $consultas";
-        $sql = ("INSERT INTO $tabla ($campo1) VALUES ($campo2)");
-        $preparar = $conectar->prepare($sql);
-        $preparar->execute();
-        $cuenta = $preparar->rowCount();
-        if ($cuenta > 0) { $si='True'; }
-        return $sql;
-        $conectar = $conexion->cerrarConexionMy();
+    */			
+			$conexion = new Conexion();
+			$conectar = $conexion->obtenerConexionMy();
+			//echo "DELETE FROM $tabla WHERE $consultas";
+			$sql = ("INSERT INTO $tabla ($campo1) VALUES ($campo2)");
+			$preparar = $conectar->prepare($sql);
+			$preparar->execute();
+			$cuenta = $preparar->rowCount();
+			if ($cuenta > 0) { $si='True'; }
+			return $cuenta;		
     }
     public static function arrayConsultaPG($campos,$tablas,$consultas) {
      /*
