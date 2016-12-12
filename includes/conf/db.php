@@ -14,18 +14,12 @@
     * @date        21/06/2009
     */
     // conexion a mysql
-    $host       = 'localhost';
-    $database   = 'fonjuprof';
-    $user       = 'root';
-    $passwd     = '';
-    $port       = '3306';
-
-    class datosConexion {
-    //////////////////MYSQL///////////////////////
-        protected $servidorMy   =   "localhost";
+    class datosConexion
+    {
+        //////////////////MYSQL///////////////////////
+        protected $servidorMy   =   "192.168.60.48";
         protected $dbMy         =   "fonjuprof";
         protected $usuarioMy    =   "root";
         protected $claveMy      =   "";
         protected $puertoMy     =   "3306";
     }
-    ?>
