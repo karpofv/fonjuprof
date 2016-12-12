@@ -84,7 +84,7 @@ if (is_file("../estmovil/apps/fotos/$cedula_est.jpg")) {
                     <a href="#" class="tooltip-button hidden-desktop" title="Navigation Menu" id="responsive-open-menu">
                         <i class="glyph-icon icon-align-justify"></i>
                     </a>
-                    <span>Sistema GMAS <i class="opacity-80">1.0</i>
+                    <span>Sistema fonjuprof <i class="opacity-80">1.0</i>
                     </span>
 
                     <a id="collapse-sidebar" href="#" title="">
