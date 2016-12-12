@@ -55,7 +55,7 @@ if (isset($_POST['user']) && isset($_POST['pass']) && ($_POST['user']!='') && ($
         if ($login != $usuario_datos['Usuario']) {
             Header ("Location: $redir?error_login=4");
             exit;
-        }        
+        }
         if ($password != $usuario_datos['contrasena']) {
             Header ("Location: $redir?error_login=3");
             exit;

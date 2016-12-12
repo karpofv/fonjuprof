@@ -4,7 +4,7 @@
 	<div id="actualizar"></div>
 	<div class="box box-solid box-warning">
 		<div class="box-header">
-			<h3 class="box-title">Importar Datos de Asociados</h3>
+			<h3 class="box-title">Importar Datos de Amortizaciones Normales</h3>
 			<div class="box-tools pull-right"> </div>
 		</div>
 		<div class="box-body">

@@ -68,7 +68,6 @@
 			}
 			$ejecutar = paraTodos::arrayejecutar($update);
 			$result = paraTodos::arrayejecutar($insertar);
-			print_r($update);
 			fclose($handle);			
 		}		
 	}

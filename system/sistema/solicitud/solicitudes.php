@@ -1,11 +1,11 @@
 <link href="<?php echo $ruta_base;?>assets/css/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
-<div class="box">
+<div class="box box-solid box-warning">
     <div class="box-header">
         <h3 class="box-title">Solicitudes Realizadas</h3> </div>
     <!-- /.box-header -->
     <div class="box-body table-responsive">
         <div id="example1_wrapper" class="dataTables_wrapper form-inline" role="grid">
-            <table id="example1" class="table table-bordered table-striped dataTable" aria-describedby="example1_info">
+            <table id="solicitudes" class="table table-bordered table-striped dataTable" aria-describedby="example1_info">
                 <thead>
                     <tr role="row">
                         <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 202px;">Nº</th>
@@ -24,7 +24,7 @@
 </div>
 <script type="text/javascript">
     $(function() {
-        $('#example1').dataTable({
+        $('#solicitudes').dataTable({
             "language": {
                 "url": "<?php echo $ruta_base;?>assets/js/Spanish.json"
             }            
