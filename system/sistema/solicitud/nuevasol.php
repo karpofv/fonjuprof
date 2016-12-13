@@ -4,52 +4,15 @@
             <div class="box-header">
                 <h3 class="box-title">Nueva Solicitud</h3> </div>
             <div class="box-body pad">
-                <form class="form-horizontal" action="/users/3046/requests" accept-charset="UTF-8" method="post">
-                    <input name="utf8" type="hidden" value="✓">
-                    <input type="hidden" name="authenticity_token" value="wK82vRUxZUOvNrxdl87KfBt4oqKE8Dcd42Oa7qdDxKneLHW5HdZrmGCeQYjJB33GZClhEKUik+XJNpk7t4Z3SA==">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="solicitud_Tipo de solicitud">Tipo de solicitud</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" id="requesttype" name="solicitud[request_type]">
-                                <option value="Solicitud de Prestamo">Solicitud de Prestamo</option>
-                                <option value="Solicitud de Retiro Parcial">Solicitud de Retiro Parcial</option>
-                            </select>
-                        </div>
-                    </div>
+                <form class="form-horizontal" action="" method="post">
                     <div class="form-group" id="loantype" style="display: block;">
                         <label class="col-sm-4 control-label" for="solicitud_Tipo de Prestamo">Tipo de prestamo</label>
                         <div class="col-sm-8">
                             <select class="form-control" id="loantype" name="solicitud[loantype]">
-                                <option value="Corto Plazo">Corto Plazo</option>
-                                <option value="Mediano Plazo">Mediano Plazo</option>
-                                <option value="Largo Plazo">Largo Plazo</option>
-                                <option value="Especial">Especial</option>
-                                <option value="Hipotecario">Hipotecario</option>
-                                <option value="Mejoramiento Profesional">Mejoramiento Profesional</option>
-                                <option value="Asistencia Medica Y Emergencias">Asistencia Medica Y Emergencias</option>
-                                <option value="Recreacion, Turismo Y Deporte">Recreacion, Turismo Y Deporte</option>
-                                <option value="Polizas De Seguro">Polizas De Seguro</option>
-                                <option value="Adquisicion De Vehiculo">Adquisicion De Vehiculo</option>
-                                <option value="Asistencia Financiera">Asistencia Financiera</option>
-                                <option value="Seguro Funerario">Seguro Funerario</option>
-                                <option value="Renovacion De Polizas De Prestamos">Renovacion De Polizas De Prestamos</option>
-                                <option value="Hipotecarios Viejos (9,74)">Hipotecarios Viejos (9,74)</option>
-                                <option value="Descuentos A Otras Cajas">Descuentos A Otras Cajas</option>
-                                <option value="Polizas De Seguro (Empleados)">Polizas De Seguro (Empleados)</option>
-                                <option value="Largo Plazo Especial">Largo Plazo Especial</option>
-                                <option value="Prestamo Con Fianzas Corto Plazo">Prestamo Con Fianzas Corto Plazo</option>
-                                <option value="Prestamo Con Fianzas Mediano Plazo">Prestamo Con Fianzas Mediano Plazo</option>
-                                <option value="Largo Plazo Con Fianzas">Largo Plazo Con Fianzas</option>
-                                <option value="Recreacion, Turismo Y Deporte">Recreacion, Turismo Y Deporte</option>
-                                <option value="Mejoramiento Profesional Con Fianzas">Mejoramiento Profesional Con Fianzas</option>
-                                <option value="Largo Plazo Especial Con Fianzas">Largo Plazo Especial Con Fianzas</option>
-                                <option value="Especial Con Fianzas">Especial Con Fianzas</option>
-                                <option value="Asistencia Medica Y Emergencias Con Fian">Asistencia Medica Y Emergencias Con Fian</option>
-                                <option value="Recreacion, Turismo Y Deporte Con Fianza">Recreacion, Turismo Y Deporte Con Fianza</option>
-                                <option value="Polizas De Seguro Con Fianzas">Polizas De Seguro Con Fianzas</option>
-                                <option value="Parcelas Del Campo Santo">Parcelas Del Campo Santo</option>
-                                <option value="Servicio Funerario">Servicio Funerario</option>
-                                <option value="Proveeduria">Proveeduria</option>
+                                <option value="Corto Plazo">Multiuso</option>
+                                <option value="Mediano Plazo">Emergencia Médica</option>
+                                <option value="Largo Plazo">Asistencia Social</option>
+                                <option value="Largo Plazo">Otro</option>
                             </select>
                         </div>
                     </div>
