@@ -29,6 +29,7 @@ global $absolute_uri;
 $absolute_uri   = 'http://localhost/fonjuprof/';
 $mod_chat       = 1;
 // Mensajes de error.
+$ruta_upload = $ruta_base."includes/uploads/";
 $ruta_album = "";
 $ruta_album_uploader = "../../fotoAlbum/";
 $ruta_album_perfil = "../fotoperf";
