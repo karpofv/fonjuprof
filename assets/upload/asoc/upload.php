@@ -68,10 +68,6 @@
 			}
 			$ejecutar = paraTodos::arrayejecutar($update);
 			$result = paraTodos::arrayejecutar($insertar);
-<<<<<<< HEAD
-=======
-			print_r($update);
->>>>>>> master
 			fclose($handle);			
 		}		
 	}
