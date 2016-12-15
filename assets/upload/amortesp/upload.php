@@ -42,10 +42,11 @@
 					//Se consulta si el asociado existe en la respectiva tabla
 					$cons_asoc = paraTodos::arrayConsultanum("PREST", "amort_esp", "PREST='$buffer[0]' and ID='$buffer[1]'");
 					if ($cons_asoc == 0) {
-						$insertar .= "INSERT INTO amort_esp(PREST, ID, MONTO, TASA, VENC, PAGADA_EL, CANC, INTE, ABONO, PAGO, RESTA) VALUES ('$buffer[0]','$buffer[1]','$buffer[2]','$buffer[3]','$buffer[4]','$buffer[5]','$buffer[6]','$buffer[7]','$buffer[8]','$buffer[9]','$buffer[10]');";
+						$insertar .= "INSERT INTO amort_esp(PREST, ID, MONTO, VENC, TASA PAGADA_EL, CANC, INTE, ABONO, PAGO, RESTA) VALUES ('$buffer[0]','$buffer[1]','$buffer[2]','$buffer[3]','$buffer[4]','$buffer[5]','$buffer[6]','$buffer[7]','$buffer[8]','$buffer[9]','$buffer[10]');";
 						set_time_limit(1);
 					} else {
-						$update .= "UPDATE amort_esp SET MONTO='$buffer[2]',TASA='$buffer[3]',VENC='$buffer[4]',PAGADA_EL='$buffer[5]',CANC='$buffer[6]',INTE='$buffer[7]',ABONO='$buffer[8]',PAGO='$buffer[9]',RESTA='$buffer[10]' WHERE PREST='$buffer[0]' and ID='$buffer[1]';";
+						$update .= "UPDATE amort_esp SET MONTO='$buffer[2]',TASA='$buffer[4]',VENC='$buffer[3]',PAGADA_EL='$buffer[5]',CANC='$buffer[6]',INTE='$buffer[7]',ABONO='$buffer[8]',PAGO='$buffer[9]',RESTA='$buffer[10]' WHERE PREST='$buffer[0]' and ID='$buffer[1]';";
+						set_time_limit(1);
 					}
 				}
 				$count=$count+1;

@@ -97,3 +97,4 @@ if (isset($_POST['user']) && isset($_POST['pass']) && ($_POST['user']!='') && ($
         exit;
     }
 }
+?>

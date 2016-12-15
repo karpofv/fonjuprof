@@ -4,7 +4,7 @@
     <div id="actualizar"></div>
     <div class="box box-solid box-warning">
         <div class="box-header">
-            <h3 class="box-title">Importar Datos de Prestamos</h3>
+            <h3 class="box-title">Importar Datos de Tipo de Prestamos</h3>
             <div class="box-tools pull-right"> </div>
         </div>
         <div class="box-body">
@@ -14,10 +14,10 @@
 													var file = inputFileImage.files[0];
 													var data = new FormData();
 													data.append('archivo',file);
-													var url = '<?php echo $ruta_base;?>assets/upload/prest/upload.php';													
+													var url = '<?php echo $ruta_base;?>assets/upload/tprest/upload.php';
 													$.ajax({
 														url:url,
-														ajaxSend: $('#actualizar').html(cargando),														
+														ajaxSend: $('#actualizar').html(cargando),
 														type:'POST',
 														contentType:false,
 														data:data,
@@ -31,7 +31,7 @@
         			 										url: 'accion.php',
         													data: {dmn: <?php echo $dmn; ?>, ver:2},
         													success: function(html) {
-        														$('#page-content').html(html);	
+        														$('#page-content').html(html);
         													},error: function(xhr,msg,excep) {
         														alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep);
         													}
@@ -41,40 +41,36 @@
     </div>
     <div class="box box-solid box-warning">
         <div class="box-header">
-            <h3 class="box-title">Prestamos</h3>
+            <h3 class="box-title">Tipos de Prestamos</h3>
             <div class="box-tools pull-right"> </div>
         </div>
         <div class="box-body">
             <table id="example1" class="table table-bordered table-striped dataTable" aria-describedby="example1_info">
                 <thead>
                     <tr role="row">
-                        <th>Cédula</th>
-                        <th>Nombres y Apellidos</th>
-                        <th>Tipo de Prestamos</th>
-                        <th>Solicitado</th>
-                        <th>Inicio</th>
+                        <th>Nombre</th>
+                        <th>Intereses</th>
+                        <th>Cuotas</th>
+                        <th>Monto Max.</th>
                     </tr>
                 </thead>
                 <tbody role="alert" aria-live="polite" aria-relevant="all">
                     <?php
-						$asoc = paraTodos::arrayconsulta("a.CEDULA, a.NAME, tp.NAME as nametp, p.SOLICITADO, p.INICIO_NORM", "prest p, asoc a, tp_prest tp", "a.CEDULA=p.CEDULA and tp.ID=p.TP_PREST");
+						$asoc = paraTodos::arrayconsulta("*", "tp_prest p", "1=1");
 						foreach ($asoc as $row){
 					?>
                         <tr class="odd">
                             <td class=" sorting_1">
-                                <?php echo $row[CEDULA];?>
+                                <?php echo $row[NAME];?>
                             </td>
                             <td class=" sorting_1">
-                                <?php echo utf8_encode($row[NAME]);?>
+                                <?php echo $row[INTERES];?>
                             </td>
                             <td class=" sorting_1">
-                                <?php echo $row[nametp];?>
+                                <?php echo $row[CUONTAS];?>
                             </td>
                             <td class=" sorting_1">
-                                <?php echo $row[SOLICITADO];?>
-                            </td>
-                            <td class=" sorting_1">
-                                <?php echo $row[INICIO_NORM];?>
+                                <?php echo $row[MTO_MAX];?>
                             </td>
                         </tr>
                         <?php
