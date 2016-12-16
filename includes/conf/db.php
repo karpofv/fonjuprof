@@ -17,7 +17,7 @@
     class datosConexion
     {
         //////////////////MYSQL///////////////////////
-        protected $servidorMy   =   "192.168.60.48";
+        protected $servidorMy   =   "localhost";
         protected $dbMy         =   "fonjuprof";
         protected $usuarioMy    =   "root";
         protected $claveMy      =   "";
