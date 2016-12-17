@@ -10,7 +10,6 @@ require_once ('system/modelo/usuarios/class.usuarios.php');
 // $contrasena = md5($_POST['contrasena']);
 // $tipo = "Empleado";
 
-
 if ($_REQUEST) {
   $usuario = $_POST['usuario'];
   $cedula = $_POST['cedula'];

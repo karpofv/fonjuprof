@@ -31,7 +31,8 @@
     include_once '../includes/validation.php';
     include_once '../includes/conexion.php';
     include_once('modelo/menu/class.menu.php');
-    include_once('modelo/datosPersonales/class.datosPersonales.php');
+    include_once('modelo/usuarios/class.usuarios.php');
+    include_once('modelo/prestamos/class.prestamos.php');
 
     $consultasMenu = new paraTodos();
 
@@ -42,8 +43,9 @@
     /**
     * Esto trae los datos del empleado
     */
-    $cedula=$_SESSION['ci'];
-    $datosEmp     = DatosPersonales::datosEmpleado($cedula);
+    $cedula = $_SESSION[ci];
+    //$cedula=$_SESSION['ci'];
+    $datosPersonales = UsuariosModel::datosUsuario($cedula);
     $sid = session_id($sid);
     $update=update_sessions();
     //$consultasMenu->arrayInserte("time, sid, username, status, Cedula","chat_sessions","'time()', '$sid', '$permiso', '1', '$cedula'");
@@ -56,13 +58,7 @@
             $_SESSION[dmn]=$_GET[dmn];
         }
     }
-    /*$ruta = "http://www.unellez.edu.ve/portal/servicios/siproma/sistema/fotos/".$_SESSION[ci].".jpg";
-    $urlexists = paraTodos::url_exists($ruta );
-    if ($urlexists == 'true') {
-      $FOTO = "http://www.unellez.edu.ve/portal/servicios/siproma/sistema/fotos/".$_SESSION[ci].".jpg";
-    } else {
-      $FOTO="../assets-minified/images/icono_perfil.png";
-    }*/
+
     $FOTO="../assets/img/avatar5.png";
     $act=$_POST[act];
     if ($act=='') {
@@ -81,9 +77,9 @@
 
 
     $res_ = $consultasMenu->arrayConsulta("Url_1,Url_2,Url_3,Url_4,Url_5,Url_6,Url_7,Url_8,Url_9,Url_10", "$bMenu", "id=$idMenut");
-    //echo "<br><br><br><br><br><br><br><br><br><br>//$idMenut//$bMenu<br>$res_ ";
+
     foreach ($res_ as $rownivel) {
-        //echo "<br><br><br><br><br><br><br><br><br><br>//$idMenut//$bMenu";
+
       if ($act=='' or $act=='1') {
           $conexf=$rownivel["Url_1"];
       }
