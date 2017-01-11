@@ -35,7 +35,6 @@ if (isset($_POST['user']) && isset($_POST['pass']) && ($_POST['user']!='') && ($
     $usu = trim($_POST['user']);
     $login = stripslashes($usu);
     $login = preg_replace("/[';]/", "", $login);
-
     $conexion = new Conexion();
     $conectar = $conexion->obtenerConexionMy();
     $usuario_consulta = $conectar->prepare("SELECT * FROM $auth_table WHERE Usuario='$login'") or die(header("Location:  $redir?error_login=1"));// or die(header ("Location:  $redir?error_login=1"));
@@ -46,15 +45,16 @@ if (isset($_POST['user']) && isset($_POST['pass']) && ($_POST['user']!='') && ($
     if ($usuario_consulta->rowCount() == 1) {
         $password = trim($_POST['pass']);
         $password = md5($password);
-    // almacenamos datos del Usuario en un array para empezar a chequear.
-    $usuario_datos = $usuario_consulta->fetch(PDO::FETCH_ASSOC);
-    // liberamos la memoria usada por la consulta, ya que tenemos estos datos en el Array.
-    $usuario_consulta->closeCursor();
-
+    	// almacenamos datos del Usuario en un array para empezar a chequear.
+    	$usuario_datos = $usuario_consulta->fetch(PDO::FETCH_ASSOC);
+    	// liberamos la memoria usada por la consulta, ya que tenemos estos datos en el Array.
+    	$usuario_consulta->closeCursor();
         if ($login != $usuario_datos['Usuario']) {
             Header("Location: $redir?error_login=4");
             exit;
         }
+		print_r($usuario_datos['contrasena']);
+		print_r($password);
         if ($password != $usuario_datos['contrasena']) {
             Header("Location: $redir?error_login=3");
             exit;
