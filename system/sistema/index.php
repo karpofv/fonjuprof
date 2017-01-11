@@ -40,19 +40,19 @@
                     <div class="row">
                         <div class="col-md-2">
                             <label>Codigo</label>
-                            <p>VB317</p>
+                            <p><?php echo $datosPersonales[CODIGO];?></p>
                         </div>
                         <div class="col-md-2">
                             <label>Cédula</label>
-                            <p>19191493</p>
+                            <p><?php echo $datosPersonales[CEDULA]?></p>
                         </div>
                         <div class="col-md-8">
                             <label>Nombres y Apellidos</label>
-                            <p>Gabriel Rojas</p>
+                            <p><?php echo $datosPersonales[NAME];?></p>
                         </div>
                         <div class="col-md-6">
                             <label>Télefono</label>
-                            <p>0412-4289536</p>
+                            <p><?php echo $datosPersonales[TELEFONO];?></p>
                         </div>
                         <div class="col-md-6">
                             <label>Correo</label>
@@ -60,11 +60,11 @@
                         </div>
                         <div class="col-md-12">
                             <label>Fecha de Ingreso</label>
-                            <p>10/12/2012</p>
+                            <p><?php echo $datosPersonales[INGRESO];?></p>
                         </div>
                         <div class="col-md-9">
                             <label>Ubicacion</label>
-                            <p>Apure (San Fernando) UNELLEZ CONTRATADO</p>
+                            <p><?php echo $datosPersonales[ORIGEN]?></p>
                         </div>
                         <div class="col-md-2">
                             <button type="button" class="btn btn-success" id="actualizar">Actualizar</button>

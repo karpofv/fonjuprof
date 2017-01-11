@@ -10,8 +10,8 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="glyphicon glyphicon-user"></i> <span><?php
-                                if (strlen($datosEmp[0][nomemp]) > 17) {
-                                    echo $empresaNomb = substr($datosEmp[0][nomemp],0,17).'...';
+                                if (strlen($datosPersonales[NAME]) > 17) {
+                                    echo $empresaNomb = substr($datosPersonales[NAME],0,17).'...';
                                 } else {
                                     echo $empresaNomb = $datosEmp[0][nomemp];
                                 }
@@ -20,8 +20,8 @@
                         <!-- User image -->
                         <li class="user-header bg-light-blue"> <img src="<?php echo $ruta_base;?>assets/img/avatar3.png" class="img-circle" alt="User Image" />
                             <p> <?php
-                                if (strlen($datosEmp[0][nomemp]) > 17) {
-                                    echo $empresaNomb = substr($datosEmp[0][nomemp],0,17).'...';
+                                if (strlen($datosPersonales[NAME]) > 17) {
+                                    echo $empresaNomb = substr($datosPersonales[NAME],0,17).'...';
                                 } else {
                                     echo $empresaNomb = $datosEmp[0][nomemp];
                                 }
