@@ -6,6 +6,12 @@
 <!-- ./wrapper -->
 <!-- add new calendar event modal -->
 <!-- jQuery 2.0.2 -->
+<script>
+	function cerrar(){
+		$("#alerta-msg").fadeOut(1000);
+		$("#alerta-msg").addClass("collapse");
+	}
+</script>
 <script src="<?php echo $ruta_base;?>assets/js/jquery.min.js"></script>
 <!-- jQuery UI 1.10.3 -->
 <script src="<?php echo $ruta_base;?>assets/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>

@@ -1,7 +1,7 @@
 <div style="width: 100%;height: 1500px;overflow: hidden;">
 <div style="width: 1050px;height: auto;margin: 2% auto auto auto;padding: 7px;border: 1px solid  #DDDDDD;overflow: hidden;background: #FFFFFF;box-shadow: 0px 0px 12px #C6C6C6;-webkit-box-shadow: 0px 0px 12px #C6C6C6;-moz-box-shadow: 0px 0px 12px #C6C6C6;">
 <?php
-if ($permiso_accion['S']==1) {
+if ($accPermisos['S']==1) {
     
  ?>
     <div style="width: 99%;height: auto;border: 1px solid #CCCCCC;background: #FFFFFF;margin: 0px auto 0px auto;padding: 5px;overflow: hidden;">
@@ -25,8 +25,8 @@ if ($permiso_accion['S']==1) {
             </select>
         </div>
         <?php
-        if ($permiso_accion['I']==1) { ?>
-        <a onclick="$.ajax({ type: 'POST', url: 'accion.php', ajaxSend: $('#AsignarPermiso').html(cargando),
+        if ($accPermisos['I']==1) { ?>
+        <a onclick="$.ajax({ type: 'POST', url: 'accion.php',
             data: 'idsubmenu=<?php echo $idsubmenu; ?>&CedulaPerm=<?php echo $_POST[CedulaPerm]; ?>&bb=1&M=3'+'&Estado='+$('#Estado').val()+'&Municipio='+$('#Municipio').val()+'&Parroquia='+$('#Parroquia').val(),
             success: function(html) { $('#AsignarPermiso').html(html); },
             error: function(xhr,msg,excep) { alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep); }
@@ -103,7 +103,7 @@ if ($permiso_accion['S']==1) {
           if (perf != ''){
             $.ajax({
               type: 'POST',
-              url:  'accion.php', ajaxSend: $('#Estadoc').html(cargando),
+              url:  'accion.php',
               data: 'ciudad='+perf+'&lf=2&idsubmenu=<?php echo $idsubmenu; ?>&idsubmenur=2&PQuien=2&PQ=99',
               success: function(html) { $('#Estadoc').html(html);}
             });
@@ -116,7 +116,7 @@ if ($permiso_accion['S']==1) {
           if (perf != ''){
             $.ajax({
               type: 'POST',
-              url:  'accion.php', ajaxSend: $('#Municipioc').html(cargando),
+              url:  'accion.php',
               data: 'estado='+perf+'&lf=2&idsubmenu=<?php echo $idsubmenu; ?>&CedulaPerm=<?php echo $_POST[CedulaPerm]; ?>&idsubmenur=2&PQuien=17&PQ=99',
               success: function(html) { $('#Municipioc').html(html);}
             });

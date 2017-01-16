@@ -1,313 +1,325 @@
 <?php
-    ////////////////////////////////////////////////////////
-    $permiso=$_SESSION['usuario_login'];
-    if($permiso==""){
-        $permiso=$_POST['very'];
-    }
-    $fdia=date('d');
-    $fmes=date('m');
-    $fano=date('y');
-    $hora=Date("h:i:s");
-    $fechaest=$fdia."/".$fmes."/".$fano;
-    $fechaest="$fechaest".":"."$hora";
+	/*Se incluyen archicos comunes*/
+	$idsubmenu = $_GET['org'];
+	if ($idsubmenu==""){
+		$idsubmenu = $_POST['org'];
+	}
+	//------------------------------------------------------------------------------------------------------------
+	/*Se recogen los datos para manipularlos*/
+    $cedula=$_POST['cedula'];
+    $apellidos=$_POST['apellido'];
+    $nombres=$_POST['nombre'];
+    $correo=$_POST['correo'];
     $nusuario=$_POST['nusuario'];
     $nclave=md5($_POST['nclave']);
-    $apellidos=$_POST['apellido'];
-    $cedula=$_POST['cedula'];
     $idperfil=$_POST['idperfil'];
-    $borrar=$_POST['ir'];
-    $editarr=$_POST['editar'];
-    $editarrt=$_POST['editarr'];
-    $alsede=$_POST['sede'];
+    $borrar=$_POST['borrar'];
+    $editarrt=$_POST['editar'];
     $cargo=$_POST['depart'];
-    $mens="Este modulo es para crear o eliminar los usuarios, control de permisos de entrada y salida";
-    $usuario=$_GET['usuari'];
-    $clave=$_GET['contan'];
-    $desbloq=$_GET['desbloq'];
-    if ($permiso_accion['S']==1 AND $permiso_accion['I']==1 AND $permiso_accion['U']==1 AND $permiso_accion['D']==1) {
-        if ($nusuario<>"" and $nclave<>"" and $idperfil<>'0' and $idperfil<>'' and $editarrt=="" and $_POST[nombre]!="" and $_POST[apellido]!="" and    $_POST[cedula]!=''){
-            $resultx=mysql_query("select id from usuarios where ((Usuario like '%".$nusuario."%'))");
-            while($row = mysql_fetch_array($resultx)) {
-                $verususd='<h3 class="error">Usuario ya esta registrado</h3>';
-            }
-            mysql_free_result($resultx);
-            if($verususd<>"") {
-                echo $verususd;
-            } else {
-                $insertar = "INSERT INTO usuarios (Cedula,Usuario,Contrasena,CodSede,Tipo,Nivel) VALUES ('$cedula','$nusuario','$nclave','$alsede','Empleado','$idperfil')";
-                if  ($result = mysql_query ($insertar)) {
+	//------------------------------------------------------------------------------------------------------------
+	/*Se verifican los permisos del usuario*/
+    if ($accPermisos['S']==1 AND $accPermisos['I']==1 AND $accPermisos['U']==1 AND $accPermisos['D']==1) {
+		/*GUARDAR -----------Se verifica que $editarrt=="" y las variables no se encuentren vacias para proceder a guardar  */		
+        if ($nusuario<>"" and $nclave<>"" and $idperfil<>'0' and $idperfil<>'' and $editarrt=="" and $nombres!="" and $apellidos!="" and $cedula!=''){
+			/*Se verifica no se encuentre ya registrado el Usuario de lo contrario se realiza el insert*/
+			$resultx = paraTodos::arrayConsultanum("id", "usuarios", "Usuario like '%".$nusuario."%'");
+			if ($resultx > 0){
+                echo '<h3 class="error">Usuario ya esta registrado</h3>';
+			} else {
+				$insertar = paraTodos::arrayInserte("Cedula,Usuario,Contrasena,CodSede,Tipo,Nivel","usuarios","'$cedula','$nusuario','$nclave','0','Valido','$idperfil'");
+				$insertar = paraTodos::arrayInserte("nacionalidad,Usuario,cedula,Nombres,Apellidos,sexo, correo","registrados","'V','$nusuario','$cedula','$nombres','$apellidos','','$correo'");
+                if ($insertar) {
                     echo '<h3 class="message">Usuario creado</h3>';
-                    $resultx=mysql_query("select id from usuarios where Usuario = '$nusuario'");
-                    while($row = mysql_fetch_array($resultx)) {
-                        $idUsua=$row[id];
-                    }
-                    mysql_free_result($resultx);
-                    $insertar = "INSERT INTO registrados (cedula,Usuario,Apellidos,Nombres,correo) VALUES ('$_POST[cedula]','$idUsua','$_POST[apellido]','$_POST[nombre]','$_POST[correo]')";
-                    if  ($result = mysql_query ($insertar)) {
-                        $correou=$_POST[correo];
-                        $headers  = "MIME-Version: 1.0\r\n";
-                        $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-                        $headers .= "To: $correou \r\n";
-                        $headers .= "From: SICA <info@igsve.com>\r\n";
-                        $headers .= "Cc: \r\n";
-                        $headers .= "Bcc: \r\n";
-                        $elcontenido = '<div style="width: 645px;overflow: hidden;font-family: Arial;border: 1px solid #EEEEEE;background: #F9F9F9;">
-                            <img src="http://www.igsve.com/alimentos/publicidad/headercorreo.png" border="0" />
-                            <div style="overflow: hidden;background: #FFFFFF;margin-left: 20px;margin-top: 15px;width: 602px;text-align: left;font-family: Arial;font-size: 1.100em;border-top: 2px solid #EEEEEE;border-left: 2px solid #EEEEEE;border-right: 2px solid #EEEEEE;">
-                            <div style="width: 100%;text-align: center;font-size: 1.100em;font-family: Arial;font-weight: bold;margin-bottom: 20px;">
-                                <U>Clave de Acceso Creada</U>
-                            </div>
-                            <div style="margin-left: 10px;width: 620px;text-align: left;font-family: Arial;font-size: 0.900em;">
-                            <b>SICA</b>, te da la bienvenida, tus datos de acceso son los siguientes:<br><br>
-                            <b>Usuario :</b> '.$nusuario.'<br>
-                            <b>Clave   :</b> '.$_POST[nclave].'<br><br>
-                                Entrar al Sistema de Alimentos :<a href="http://www.igsve.com/alimentos">SICA</a>
-                            </div>
-                                <br>
-                            </div>
-                            <div style="background: #F3F3F3;width: 645px;height: auto;text-align: center;">
-                                <img src="http://www.igsve.com/alimentos/publicidad/footercorreo.png" border="0" />
-                            </div>
-                        </div>';
-                        //mail($correou, "Acceso Creado para el Sistema SICA", $elcontenido,$headers)or die('Error enviando correo');
-                    }else{
-                        echo "<h3 class=\"error\">No se proceso los datos, del Registro</h3>";
-                    }
+					$resultx = paraTodos::arrayConsulta("id", "usuarios", "Usuario = '$nusuario'");
+					foreach($resultx as $row){
+                        $idUsua=$row[id];						
+					}
                 }else{
-                    echo "<h3 class=\"error\">No se proceso los datos, del Registro</h3>";
-                }
-            }
-        }
-        if ($idperfil<>'0' and $idperfil<>'' and $editarrt!="" and $_POST[nombre]!="" and $_POST[apellido]!="" and $_POST[cedula]!='' and $_POST[correo]!=''){
-            $modifico = "UPDATE usuarios SET  Nivel='$idperfil' WHERE id=$editarrt";
-            if  ($result = mysql_query ($modifico)) {
-            } else {
-                echo '<h3 class="error">Error Modificando Registro</h3>';
-            }
-            $modifico = "UPDATE registrados SET  Apellidos='$_POST[apellido]',Nombres='$_POST[nombre]',correo='$_POST[correo]' WHERE (cedula='$_POST[cedula]')";
-            if  ($result = mysql_query ($modifico)) {
+                    echo "<h3 class='error'>No se proceso los datos, del Registro</h3>";
+                }				
+			}
+			//------------------------------------------------------------------------------------------------------------			
+		}
+		//------------------------------------------------------------------------------------------------------------
+		/*UPDATE--------------Se verifica que $editarrt!="" y las variables no se encuentren vacias para proceder a Editar*/				
+        if ($idperfil<>"0" and $idperfil<>"" and $editarrt!="" and $nombres!="" and $apellidos!="" and $cedula!="" and $correo!=""){
+			/*Se modifica el Nivel del Usuario*/
+			$modifico = paraTodos::arrayUpdate("Nivel='$idperfil'", "usuarios", "id=$editarrt");
+			//------------------------------------------------------------------------------------------------------------
+			/*Se modifica los datos de registro del Usuario*/			
+			$modifico = paraTodos::arrayUpdate("Apellidos='$apellidos', Nombres='$nombres', correo='$correo'", "registrados", "cedula='$cedula'");			
+            if($modifico){
                 echo '<h3 class="message">Registro Modificado</h3>';
-            } else {
             }
+			//------------------------------------------------------------------------------------------------------------			
         }
-        $verususd="";
-        if ($borrar<>"") {
-            $insertar = "delete from usuarios where id = $borrar";
-            if ($res=mysql_query ($insertar)) {
-                echo '<h3 class="message">Usuario eliminado</h3>';
-                $mater="$cedula : $cargo : $nusuario : $nombre_perfil";
-                $cedula='';
-                $nusuario='';
-            }            
-        }
-        if ($editarr!=""){
-            $resultsedes=mysql_query("select * from usuarios where ((id = '$editarr'))");
-            while($rowses = mysql_fetch_array($resultsedes)) {
+		//------------------------------------------------------------------------------------------------------------		
+		/*MOSTRAR---------------------Se verifica si la variable $editarr!="" para proceder a Mostrar los datos guardados del usuario*/		
+        if ($editarrt!=""){
+			$resultsedes = paraTodos::arrayConsulta("*", "usuarios", "id = '$editarrt'");
+            foreach ($resultsedes as $rowses){
                 $idperfil=$rowses["Nivel"];
                 $cemp=$rowses["Cedula"];
                 $ucemp=$rowses["Usuario"];
-                $resultsede=mysql_query("select Nombres,Apellidos,correo from registrados where cedula = '$cemp'");
-                while($rowse = mysql_fetch_array($resultsede)) {
-                    $apnomb=$rowse["Nombres"]; $apnomba=$rowse["Apellidos"]; $correo=$rowse["correo"];
-                }
-                mysql_free_result($resultsede);
-             }
-            mysql_free_result($resultsedes);
+				$resultsede = paraTodos::arrayConsulta("Nombres,Apellidos,correo", "registrados", "cedula = '$cemp'");				
+				foreach ($resultsede as $rowse){
+                    $apnomb=$rowse["Nombres"];
+					$apnomba=$rowse["Apellidos"];
+					$correo=$rowse["correo"];					
+				}			
+			}
         }
-    }
-    if ($permiso_accion['S']==1 AND $permiso_accion['I']==1 AND $permiso_accion['U']==1 AND $permiso_accion['D']==1) {
-        if ($_POST['editar']!='') { ?>
-            <FORM onsubmit="$.ajax({ 
+		//------------------------------------------------------------------------------------------------------------
+		/*BORRAR-----------------Se verifica si la variable $borrar!="" para proceder a eliminar el usuario*/
+        if ($borrar<>"") {			
+			$delete = paraTodos::arrayDelete("cedula = '$cedula'","registrados");
+			$delete = paraTodos::arrayDelete("id = $borrar","usuarios");
+            if ($delete) {
+                echo '<h3 class="message">Usuario eliminado</h3>';
+            }
+        }		
+		//------------------------------------------------------------------------------------------------------------	
+?>
+	<div class="row  border-bottom white-bg dashboard-header">
+		<div class="col-md-3">
+			<h2>Usuarios</h2> <!-- <small>You have 42 messages and 6 notifications.</small> -->
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>Ingrese Datos del Empleado</h5>
+					<div class="ibox-tools">
+						<a class="collapse-link"> <i class="fa fa-chevron-up"></i> </a>
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-wrench"></i> </a>
+						<ul class="dropdown-menu dropdown-user">
+							<li><a href="#">Config option 1</a> </li>
+							<li><a href="#">Config option 2</a> </li>
+						</ul>
+						<a class="close-link"> <i class="fa fa-times"></i> </a>
+					</div>
+				</div>
+				<div class="ibox-content">
+					<?php
+		/*Si la variable Editar es recibida por post entonces se arma el formulario con la accion para editar de lo contrario Guardar*/		
+        if ($editarrt!='') {
+?>
+						<FORM onsubmit="$.ajax({
                                 type: 'POST',
                                 url: 'accion.php',
                                 data: {
                                     cedula      : $('#cedula').val(),
+                                    act      	: 2,
                                     apellido    : $('#apellido').val(),
                                     nombre      : $('#nombre').val(),
                                     correo      : $('#correo').val(),
                                     nusuario    : $('#nusuario').val(),
                                     nclave      : $('#nclave').val(),
                                     idperfil    : $('#idperfil').val(),
-                                    idsubmenu   : <?php echo $idsubmenu; ?>,
-                                    editarr     : <?php echo $_POST['editar']; ?>
+									ver 		: 1,                                    
+                                    org   		: <?php echo $idsubmenu; ?>,
+                                    editar     	: <?php echo $editarrt; ?>
                                 },
-                                success: function(html) {   $('#page-content').html(html); },
-                                error: function(xhr,msg,excep) { alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep); }
-                            }); return false" action="javascript: void(0);" method="post">
-<?php
-        }else{ ?>
-            <FORM onsubmit="$.ajax({ 
-                                type: 'POST', url: 'accion.php',
+                                success: function(html) {
+                                	$('#page-content').html(html); 
+                                },
+                                error: function(xhr,msg,excep) {
+                                	alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep);
+                                }
+							}); return false" action="javascript: void(0);" method="post" class="form-horizontal">
+							<?php
+        }else{ 
+?>
+								<FORM onsubmit="$.ajax({ 
+                                type: 'POST',
+                                url: 'accion.php',
                                 data: {
                                     cedula      : $('#cedula').val(),
+                                    act      	: 2,
                                     apellido    : $('#apellido').val(),
                                     nombre      : $('#nombre').val(),
                                     correo      : $('#correo').val(),
                                     nusuario    : $('#nusuario').val(),
                                     nclave      : $('#nclave').val(),
                                     idperfil    : $('#idperfil').val(),
-                                    idsubmenu   : <?php echo $idsubmenu; ?>
+									ver 		: 1,                                    
+                                    org   		: <?php echo $idsubmenu; ?>
                                 },
-                                success: function(html) {   $('#page-content').html(html); },
-                                error: function(xhr,msg,excep) { alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep); }
-                            }); return false" action="javascript: void(0);" method="post">
-<?php
+                                success: function(html) {
+                                	$('#page-content').html(html); 
+                                },
+                                error: function(xhr,msg,excep) {
+                                	alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep);
+                                }
+                            }); return false" action="javascript: void(0);" method="post"  class="form-horizontal">
+									<?php
         }
+		//------------------------------------------------------------------------------------------------------------
 ?>
-        <div style="width: 70%;border: 1px solid #CCCCCC;background: #FFFFFF;margin: 56px auto 0px auto;">
-            <table cellSpacing="1" cellPadding="2" style="width: 100%;">
-                <tr>
-                    <th colSpan="2" style="width: 100%;padding: 10px 6px 10px 6px;background: #FAFAFA;border: 1px solid #DDDDDD;"> Ingresar Datos del Empleado </th>
-                </tr>
-                <tr>
-                    <td style="height: 30px;padding: 8px;" width="220" height="10">
-                        C&eacute;dula:
-                    </td>
-                    <td style="height: 30px;padding: 8px;" width="489" height="10">
-                        <input class="gen_input" style="font-family: Arial; height: 33px;padding: 7px;border: 1px solid #DDDDDD;" maxLength="12" size="10" name="cedula" id="cedula" value="<?php printf(" %s ",$cemp);?>" required="required">
-                    </td>
-                </tr>
-                                <tr>
-                                    <td style="height: 30px;padding: 8px;" width="220" height="10">
-                                        Nombres:
-                                    </td>
-                                    <td style="height: 30px;padding: 8px;" width="489" height="10">
-                                        <input type="text" style="font-family: Arial; height: 33px;padding: 7px;border: 1px solid #DDDDDD;" maxLength="100" size="60" name="nombre" id="nombre" value="<?php printf(" %s ",$apnomb);?>" required="required">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="height: 30px;padding: 8px;" width="220" height="10">
-                                        Apellidos:
-                                    </td>
-                                    <td style="height: 30px;padding: 8px;" width="489" height="10">
-                                        <input type="text" style="font-family: Arial; height: 33px;padding: 7px;border: 1px solid #DDDDDD;" maxLength="100" size="60" name="apellido" id="apellido" value="<?php printf(" %s ",$apnomba);?>" required="required">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="height: 30px;padding: 8px;" width="220" height="10">
-                                        Correo:
-                                    </td>
-                                    <td style="height: 30px;padding: 8px;" width="489" height="10">
-                                        <input type="email" style="font-family: Arial; height: 33px;padding: 7px;border: 1px solid #DDDDDD;" maxLength="100" size="60" name="correo" id="correo" value="<?php printf(" %s ",$correo);?>" required="required">
-                                    </td>
-                                </tr>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Cédula:</label>
+						<div class="col-sm-2">
+                               <input type="text" class="form-control gen_input" maxLength="12" size="10" name="cedula" id="cedula" value="<?php echo $cemp;?>" required="required">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Nombres:</label>
+						<div class="col-sm-10">
+                               <input type="text" class="form-control gen_input" maxLength="100" size="60" name="nombre" id="nombre" value="<?php echo $apnomb;?>" required="required">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Apellidos:</label>
+						<div class="col-sm-10">
+                               <input type="text" class="form-control gen_input" maxLength="100" size="60" name="apellido" id="apellido" value="<?php echo $apnomba;?>" required="required">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Correos:</label>
+						<div class="col-sm-10">
+                               <input type="email" class="form-control gen_input" maxLength="100" size="60" name="correo" id="correo" value="<?php echo $correo;?>" required="required">
+						</div>
+					</div>
+				<div class="ibox-title">
+					<h5>Ingresar Usuario</h5>
+					<div class="ibox-tools">
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+					</div>
+				</div>
+				<div class="ibox-content">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Usuario:</label>
+						<div class="col-sm-2">
+                               <input type="text" class="form-control gen_input" maxLength="10" size="10" name="nusuario" id="nusuario" value="<?php echo $ucemp;?>" required="required">
+						</div>
+					</div>
 
-                                <tr>
-                                    <th colSpan="2" style="width: 100%;padding: 6px;background: #FAFAFA;border: 1px solid #DDDDDD;">
-                                        Ingresar Usuario
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td style="height: 30px;padding: 8px;" width="220" height="10">
-                                        Usuario:
-                                    </td>
-                                    <td style="height: 30px;padding: 8px;" width="489" height="10">
-                                        <input type="text" style="font-family: Arial; height: 33px;padding: 7px;border: 1px solid #DDDDDD;" maxLength="10" size="10" name="nusuario" id="nusuario" value="<?php printf(" %s ",$ucemp);?>" required="required">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="height: 30px;padding: 8px;" width="220" height="10">
-                                        Contrase&ntilde;a:
-                                    </td>
-                                    <td style="height: 30px;padding: 8px;" width="489" height="10">
-                                        <input type="text" style="font-family: Arial; height: 33px;padding: 7px;border: 1px solid #DDDDDD;" maxLength="10" size="10" name="nclave" id="nclave" type="password" <?php if ($_POST[ 'editar']=="" ) { ?> required="required"
-                                        <?php } ?> >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th colSpan="2" style="width: 100%;padding: 6px;background: #FAFAFA;border: 1px solid #DDDDDD;">
-                                        Perfil del Usuario
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td style="height: 30px;padding: 15px 8px 15px 8px;" width="220" height="10">
-                                        Perfil:
-                                    </td>
-                                    <td style='height: 30px;padding: 15px 8px 15px 8px;'>
-                                        <select style='font-family: Arial; height: 33px;padding: 7px;border: 1px solid #DDDDDD;' id="idperfil" name="idperfil" required="required">
-                                            <option value="0">Seleccione el Perfil</option>
-                                            <?php  Combos::CombosSelect($permiso, $id, 'DISTINCT CodPerfil,Nombre', 'perfiles', 'CodPerfil', 'Nombre', "CodPerfil<>'' ORDER BY Nombre");   ?>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th colSpan="2" style="width: 100%;padding: 6px;background: #FAFAFA;border: 1px solid #DDDDDD;">
-                                        <button class="btn btn-primary popover-button" type="submit" name="Grabar" value="Enviar">Enviar</button>
-                                    </th>
-                                </tr>
-                            </table>
-                        </div>
-                </FORM>
-                <?php
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Contraseña:</label>
+						<div class="col-sm-2">
+                               <input class="form-control gen_input" maxLength="10" size="10" maxLength="10" size="10" name="nclave" id="nclave" type="password" <?php if ($editarrt=="" ) { ?> required="required"
+														<?php 
+									} 
+?> >
+						</div>
+					</div>
+				</div>		
+				<div class="ibox-title">
+					<h5>Perfil del Usuario</h5>
+					<div class="ibox-tools">
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+					</div>
+				</div>				
+				<div class="ibox-content">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Perfil</label>
+						<div class="col-sm-2">
+							<select style='font-family: Arial; height: 33px;padding: 7px;border: 1px solid #DDDDDD;' id="idperfil" name="idperfil" required="required" class="form-control">
+								<option value="0">Seleccione el Perfil</option>
+								<?php  Combos::CombosSelect($permiso, $id, 'DISTINCT CodPerfil,Nombre', 'perfiles', 'CodPerfil', 'Nombre', "CodPerfil<>'' ORDER BY Nombre");   ?>
+							</select>
+						</div>
+					</div>
 
-}
-if ($permiso_accion['S']==1) {
-$resultc=mysql_query("select usuarios.id,usuarios.Cedula,usuarios.Usuario,registrados.Nombres,registrados.Apellidos,registrados.correo,
-    usuarios.Nivel from usuarios,registrados where usuarios.Tipo='Empleado'
-    and registrados.cedula=usuarios.Cedula
-    order by registrados.Nombres"); ?>
-                    <div style="width: 90%;border: 1px solid #CCCCCC;background: #FFFFFF;margin: 10px auto 0px auto;">
-                        <table cellSpacing="1" cellPadding="2" style="width: 100%;">
-                            <tr>
-                                <th colSpan="5" style="width: 100%;padding: 6px;background: #FAFAFA;border: 1px solid #DDDDDD;">
-                                    Usuarios Registrados
-                                </th>
-                            </tr>
-                            <?php
-    while($rowc = mysql_fetch_array($resultc)) {
-      $borra=$rowc["id"];
-      $editar=$rowc["id"];
-      $cdemp=$rowc["Cedula"];
-      $nnusuario=$rowc["Usuario"];
-      $nnclave=$rowc["Nivel"];
-      $nombperfil='';
-      $resultq1d=mysql_query("select Nombre from perfiles where CodPerfil=$nnclave");
-      while($rowq1d = mysql_fetch_array($resultq1d)) {
-        $nombperfil=$rowq1d["Nombre"];
-       }
-       mysql_free_result($resultq1d);
-      ?>
-                                <TR style="border-bottom: 1px solid #EEEEEE;">
-                                    <TD style="padding: 15px 7px 15px 7px;">
-                                        <B> <?printf("%s",$nnusuario);?></B>
-                                    </TD>
-                                    <TD>
-                                        <B><?php echo $rowc["Cedula"]; ?> : <?php echo $rowc["Nombres"]; ?>, <?php echo $rowc["Apellidos"]; ?><br><?php echo $rowc["correo"]; ?></B>
-                                    </TD>
-                                    <TD>
-                                        <B class="btn btn-primary popover-button"><?php echo $nombperfil; ?></B>
-                                    </TD>
-                                    <TD>
-                                        <?php
-        if ($permiso_accion['S']==1 AND $permiso_accion['I']==1 AND $permiso_accion['U']==1 AND $permiso_accion['D']==1) { ?>
-                                            <a title="Asignar permisos" onclick="$.ajax({ type: 'POST', url: 'accion.php', ajaxSend: $('#verMas').html(cargando),
-        data: 'bodega=<?php echo $row[Id]; ?>&CedulaPerm=<?php echo $rowc[Cedula]; ?>&M=2&idsubmenu=<?php echo $idsubmenu; ?>',
-        success: function(html) { $('#verMas').html(html); },
-        error: function(xhr,msg,excep) { alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep); }
-        }); return false;" href="javascript: void(0);">
-                                                <i class="glyph-icon icon-archive opacity-80" style="font-size: 1.400em;"></i>
-                                            </a>
-                                            <a title="Editar el registro" onclick="$.ajax({ type: 'POST', url: 'accion.php', ajaxSend: $('#page-content').html(cargando),
-        data: 'editar=<?php echo $rowc[id]; ?>&idsubmenu=<?php echo $idsubmenu; ?>',
-        success: function(html) { $('#page-content').html(html); },
-        error: function(xhr,msg,excep) { alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep); }
-        }); return false;" href="javascript: void(0);"><i class="glyph-icon icon-edit opacity-80" style="font-size: 1.600em;margin-left: 10px;"></i></a>
-                                            <a onclick=" var msg = confirm('Esta seguro que desea eliminar el registro?');
-        if (msg) {
-        $.ajax({ type: 'POST', url: 'accion.php', ajaxSend: $('#page-content').html(cargando),
-        data: 'ir=<?php echo $rowc[id]; ?>&idsubmenu=<?php echo $idsubmenu; ?>',
-        success: function(html) { $('#page-content').html(html); }
-        });  } return false;" href="javascript: void(0);" title="Eliminar el registro">
-                                                <i class="glyph-icon icon-remove opacity-80" style="font-size: 1.600em;margin-left: 10px;"></i>
-                                            </a>
-                                            <?php } ?>
-                                    </TD>
-                                </TR>
-                                <?php
-      $rtwer=""; $apnomb="";
-    }
-    mysql_free_result($resultc);    ?>
-                        </table>
-                    </div>
-                    <?php } ?>
-                        <br>
+					<div class="form-group">
+						<div class="col-sm-4 col-sm-offset-2">
+							<button class="btn btn-primary" type="submit" name="Grabar" value="Enviar">Enviar</button>
+						</div>
+					</div>
+				</div>
+				</FORM>
+			</div>
+		</div>
+	</div>
+</div>									
+								<?php
+	}
+	/*Si el usuario tiene permisos de lectura se muestra la tabla con los usuarios registrados*/
+	if ($accPermisos['S']==1) {
+		$resultc = paraTodos::arrayConsulta("usuarios.id,usuarios.Cedula,usuarios.Usuario,registrados.Nombres,registrados.Apellidos,registrados.correo,
+    usuarios.Nivel", "usuarios,registrados", "usuarios.Tipo='Valido' and usuarios.Cedula=registrados.cedula")
+?>
+									<div style="width: 90%;border: 1px solid #CCCCCC;background: #FFFFFF;margin: 10px auto 0px auto;">
+										<table cellSpacing="1" cellPadding="2" style="width: 100%;">
+											<tr>
+												<th colSpan="5" style="width: 100%;padding: 6px;background: #FAFAFA;border: 1px solid #DDDDDD;"> Usuarios Registrados </th>
+											</tr>
+											<?php
+		/*Se arrojan los datos en la tabla de usuarios registrados*/
+		foreach($resultc as $rowc){
+      		$borra=$rowc["id"];
+      		$editar=$rowc["id"];
+      		$cdemp=$rowc["Cedula"];
+      		$nnusuario=$rowc["Usuario"];
+      		$nnclave=$rowc["Nivel"];
+      		$nombperfil='';
+			/*Se busca el perfil al que pertenece el usuario*/
+			$resultq1d = paraTodos::arrayConsulta("Nombre", "perfiles", "CodPerfil=$nnclave");
+			foreach ($resultq1d as $rowq1d){
+        		$nombperfil=$rowq1d["Nombre"];				
+			}
+			//------------------------------------------------------------------------------------------------------------
+?>
+												<tr style="border-bottom: 1px solid #EEEEEE;">
+													<td style="padding: 15px 7px 15px 7px;"> <b> <?php printf("%s",$nnusuario);?></b> </td>
+													<td> <b><?php echo $rowc["Cedula"]; ?> : <?php echo $rowc["Nombres"]; ?>, <?php echo $rowc["Apellidos"]; ?><br><?php echo $rowc["correo"]; ?></b> </td>
+													<td> <b class="btn btn-primary popover-button"><?php echo $nombperfil; ?></b> </td>
+													<td>
+														<?php
+				/*Se verifica tenga todos los permisos*/
+        		if ($accPermisos['S']==1 AND $accPermisos['I']==1 AND $accPermisos['U']==1 AND $accPermisos['D']==1) {
+?>
+															<a title="Editar el registro" onclick="
+        			 	$.ajax({
+        			 		type: 'POST',
+        			 		url: 'accion.php',
+        					data: { 
+        						editar: '<?php echo $rowc[id]; ?>', 
+								ver 		: 1,        						
+        						org: <?php echo $idsubmenu; ?>, 
+        						act:2},
+        					success: function(html) {
+        						$('#page-content').html(html);
+        					},
+        					error: function(xhr,msg,excep) { alert('Error Status ' + xhr.status + ': ' + msg + '/ ' + excep); }
+        				}); return false;" href="javascript: void(0);"> <i class="glyph-icon icon-edit opacity-80" style="font-size: 1.600em;margin-left: 10px;"></i> </a>
+															<a title="Eliminar el registro" onclick=" var msg = confirm('Esta seguro que desea eliminar el registro?');
+        				if (msg) {
+        					$.ajax({
+        						type: 'POST',
+        						url: 'accion.php',
+        						data: { 
+        							borrar: '<?php echo $rowc[id]; ?>', 
+									ver 		: 1,        							
+        							org: <?php echo $idsubmenu; ?>, 
+        							act:2, 
+        							cedula: <?php echo $rowc['Cedula']; ?>
+        						},
+        						success: function(html) { $('#page-content').html(html); }
+        					});
+        				} return false;" href="javascript: void(0);"> <i class="glyph-icon icon-remove opacity-80" style="font-size: 1.600em;margin-left: 10px;"></i> </a>
+															<?php
+				}
+				//------------------------------------------------------------------------------------------------------------						
+?>
+													</td>
+												</tr>
+												<?php		
+		}
+		//------------------------------------------------------------------------------------------------------------					
+?>
+										</table>
+									</div>
+									<?php
+	}
+	//------------------------------------------------------------------------------------------------------------
+
+?>

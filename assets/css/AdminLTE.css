@@ -14,7 +14,6 @@
 html,
 body {
   overflow-x: hidden!important;
-  font-family: 'Source Sans Pro', sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100%;
   background: #f9f9f9;
@@ -111,7 +110,7 @@ body.fixed .wrapper {
 }
 /* Content */
 .content {
-  padding: 20px 15px;
+  padding: 25px 15px;
   background: #f9f9f9;
 }
 /* Utility */
@@ -128,7 +127,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: 'Source Sans Pro', sans-serif;
+  
 }
 /* Page Header */
 .page-header {
@@ -766,7 +765,7 @@ body > .header .logo .icon {
   margin-right: 5px;
   /* Default background and font colors */
 
-  background: #00c0ef;
+  background: rgba(243, 156, 18, 0.25);
   color: #f9f9f9;
   /* Fallback for browsers that doesn't support rgba */
 

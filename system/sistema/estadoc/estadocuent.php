@@ -11,11 +11,6 @@
 ?>
 <section class="content invoice">
     <!-- title row -->
-    <div class="row">
-    <a href="accion.php" class="logo">
-        <!-- Add the class icon to your logo image or logo icon to add the margining -->FONJUPROF </a>       
-        <!-- /.col -->
-    </div>
     <div class="row invoice-info">
         <div class="col-sm-4 invoice-col"> <b>Asociado:</b> <?php echo $_SESSION[ci];?> - <?php echo $nombre;?>
             <br> <b>Ubicación:</b> <?php echo $ubicacion;?></div>

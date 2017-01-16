@@ -29,6 +29,7 @@
 
     include_once '../includes/tools.php';
     include_once '../includes/validation.php';
+    include_once '../includes/combos.php';
     include_once '../includes/conexion.php';
     include_once('modelo/menu/class.menu.php');
     include_once('modelo/usuarios/class.usuarios.php');
@@ -74,8 +75,6 @@
     if ($_POST[ver]=='2') {
         $bMenu='m_menu_emp_sub_menj';
     }
-
-
     $res_ = $consultasMenu->arrayConsulta("Url_1,Url_2,Url_3,Url_4,Url_5,Url_6,Url_7,Url_8,Url_9,Url_10", "$bMenu", "id=$idMenut");
 
     foreach ($res_ as $rownivel) {

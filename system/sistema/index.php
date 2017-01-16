@@ -3,6 +3,7 @@
     include("../includes/layout/header.php");
     include("../includes/layout/sidebar.php");
     include("../includes/layout/cuerpo.php");
+	$consul = paraTodos::arrayConsulta("*", "", "");
 ?>
     <section class="content">
         <!-- Small boxes (Stat box) -->
@@ -31,7 +32,7 @@
         <!-- /.row (main row) -->
     </section>
     <section>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <!-- Default box -->
             <div class="box box-solid box-warning">
                 <div class="box-header">
@@ -77,7 +78,7 @@
         </div>
     </section>
     <section>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="box box-solid box-warning">
                 <div class="box-header">
                     <h3 class="box-title">Solicitudes Realizadas</h3> </div>
@@ -87,14 +88,29 @@
                         <table id="solicitudes" class="table table-bordered table-striped dataTable" aria-describedby="example1_info">
                             <thead>
                                 <tr role="row">
-                                    <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 202px;">Nº</th>
-                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 299px;">Fecha</th>
-                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 267px;">Tipo</th>
-                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 172px;">Monto</th>
-                                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 122px;">Cancelar</th>
+                                    <th>Nº</th>
+                                    <th>fecha</th>
+                                    <th>Tipo</th>
+                                    <th>Monto</th>
+                                    <th>Estatus</th>
                                 </tr>
                             </thead>
-                            <tbody role="alert" aria-live="polite" aria-relevant="all"> </tbody>
+                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+<?php
+								$consulsol = paraTodos::arrayConsulta("sp.ID, tp.NAME, sp.FECHA, sp.MONTO, sp.ESTATUS", "solict_prest sp, tp_prest tp", " sp.TP_PREST=tp.ID and CEDULA=$_SESSION[ci] and sp.ESTATUS<>'ELIMINADO'");
+								foreach($consulsol as $row){
+							?>
+                        <tr>							
+								<td class="text-center"><?php echo $row[ID];?></td>
+								<td class="text-center"><?php echo $row[FECHA];?></td>
+								<td class="text-center"><?php echo $row[NAME];?></td>								
+								<td class="text-center"><?php echo $row[MONTO];?></td>
+								<td class="text-center"><?php echo $row[ESTATUS];?></td>
+                        </tr>                        								
+							<?php
+								}
+							?>
+                            </tbody>
                         </table>
                     </div>
                 </div>

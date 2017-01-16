@@ -191,7 +191,7 @@ class paraTodos
         if ($cuenta > 0) {
             $si='True';
         }
-        return $si;
+        return $sql;
         $conectar = $conexion->cerrarConexionMy();
     }
     public static function arrayejecutar($consulta) {

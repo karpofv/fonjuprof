@@ -1,100 +1,115 @@
-<section class="content invoice">
+<?php
+	$tipo = $_POST['tipo'];
+	$monto = $_POST['monto'];
+	$eliminar = $_POST['eliminar'];
+	$codigo = $_POST['codigo'];
+	if ($eliminar =='' and $tipo>'0'){
+		$consulta = paraTodos::arrayConsulta("*", "asoc", "CEDULA=$_SESSION[ci]");
+		foreach($consulta as $row){
+			$asoc = $row[ID];
+			$nombre_asoc = $row[NAME];
+		}
+		$consultap = paraTodos::arrayConsulta("*", "tp_prest", "ID=$tipo");
+		foreach($consultap as $row){
+			$total = $monto+($monto*($row[INTERES]/100));
+			$monto_cuota =$total/$row[CUONTAS];
+		}
+		$result =paraTodos::arrayInserte("CEDULA, ASOC, TP_PREST, ESTATUS, NAME, FECHA, MONTO, MTO_X_CTA", "solict_prest", "'$_SESSION[ci]', '$asoc', '$tipo', 'EN PROCESO', '$nombre_asoc', CURRENT_DATE, '$total','$monto_cuota'");
+	}
+	if ($eliminar !=''){
+		paraTodos::arrayUpdate("ESTATUS='ELIMINADO'", "solict_prest", "ID=$codigo");		
+	}
+?>
+   <section class="content invoice">
     <div class="row">
         <div class="box box-solid box-warning">
             <div class="box-header">
                 <h3 class="box-title">Nueva Solicitud</h3> </div>
             <div class="box-body pad">
-                <form class="form-horizontal" action="/users/3046/requests" accept-charset="UTF-8" method="post">
-                    <input name="utf8" type="hidden" value="✓">
-                    <input type="hidden" name="authenticity_token" value="wK82vRUxZUOvNrxdl87KfBt4oqKE8Dcd42Oa7qdDxKneLHW5HdZrmGCeQYjJB33GZClhEKUik+XJNpk7t4Z3SA==">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="solicitud_Tipo de solicitud">Tipo de solicitud</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" id="requesttype" name="solicitud[request_type]">
-                                <option value="Solicitud de Prestamo">Solicitud de Prestamo</option>
-                                <option value="Solicitud de Retiro Parcial">Solicitud de Retiro Parcial</option>
-                            </select>
-                        </div>
-                    </div>
+                <form class="form-horizontal">
                     <div class="form-group" id="loantype" style="display: block;">
                         <label class="col-sm-4 control-label" for="solicitud_Tipo de Prestamo">Tipo de prestamo</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="loantype" name="solicitud[loantype]">
-                                <option value="Corto Plazo">Corto Plazo</option>
-                                <option value="Mediano Plazo">Mediano Plazo</option>
-                                <option value="Largo Plazo">Largo Plazo</option>
-                                <option value="Especial">Especial</option>
-                                <option value="Hipotecario">Hipotecario</option>
-                                <option value="Mejoramiento Profesional">Mejoramiento Profesional</option>
-                                <option value="Asistencia Medica Y Emergencias">Asistencia Medica Y Emergencias</option>
-                                <option value="Recreacion, Turismo Y Deporte">Recreacion, Turismo Y Deporte</option>
-                                <option value="Polizas De Seguro">Polizas De Seguro</option>
-                                <option value="Adquisicion De Vehiculo">Adquisicion De Vehiculo</option>
-                                <option value="Asistencia Financiera">Asistencia Financiera</option>
-                                <option value="Seguro Funerario">Seguro Funerario</option>
-                                <option value="Renovacion De Polizas De Prestamos">Renovacion De Polizas De Prestamos</option>
-                                <option value="Hipotecarios Viejos (9,74)">Hipotecarios Viejos (9,74)</option>
-                                <option value="Descuentos A Otras Cajas">Descuentos A Otras Cajas</option>
-                                <option value="Polizas De Seguro (Empleados)">Polizas De Seguro (Empleados)</option>
-                                <option value="Largo Plazo Especial">Largo Plazo Especial</option>
-                                <option value="Prestamo Con Fianzas Corto Plazo">Prestamo Con Fianzas Corto Plazo</option>
-                                <option value="Prestamo Con Fianzas Mediano Plazo">Prestamo Con Fianzas Mediano Plazo</option>
-                                <option value="Largo Plazo Con Fianzas">Largo Plazo Con Fianzas</option>
-                                <option value="Recreacion, Turismo Y Deporte">Recreacion, Turismo Y Deporte</option>
-                                <option value="Mejoramiento Profesional Con Fianzas">Mejoramiento Profesional Con Fianzas</option>
-                                <option value="Largo Plazo Especial Con Fianzas">Largo Plazo Especial Con Fianzas</option>
-                                <option value="Especial Con Fianzas">Especial Con Fianzas</option>
-                                <option value="Asistencia Medica Y Emergencias Con Fian">Asistencia Medica Y Emergencias Con Fian</option>
-                                <option value="Recreacion, Turismo Y Deporte Con Fianza">Recreacion, Turismo Y Deporte Con Fianza</option>
-                                <option value="Polizas De Seguro Con Fianzas">Polizas De Seguro Con Fianzas</option>
-                                <option value="Parcelas Del Campo Santo">Parcelas Del Campo Santo</option>
-                                <option value="Servicio Funerario">Servicio Funerario</option>
-                                <option value="Proveeduria">Proveeduria</option>
+                            <select class="form-control" id="tipsol" onchange="
+							$('#total').val('');
+							$('#monto_cuota').val('');
+							$('#montosol').val('');
+                            $.ajax({
+								url:'accion.php',
+								type:'POST',
+								ajaxSend: $('#result').html(cargando),								
+								data:{
+									dmn 	: 354,
+									tiposol : $('#tipsol').val(),
+									ver 	: 1
+								},
+								success : function (html) {
+									$('#result').html(html);
+								},
+							});">                                
+                            <?php
+								combos::CombosSelect(1, "ID", "*", "tp_prest", "ID", "NAME", "MTO_MAX>0");
+								?>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group" id="cuotas" style="display: block;">
-                        <label class="col-sm-4 control-label" for="solicitud_Tiempo">Tiempo</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" readonly="readonly" id="cuotas_f" type="text" name="solicitud[cuotas]"> </div>
-                    </div>
-                    <div class="form-group" id="literal_d" style="display: none;">
-                        <label class="col-sm-4 control-label" for="solicitud_Literal">Literal</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" id="porcentaje" name="solicitud[literal]">
-                                <option value="80">80%</option>
-                                <option value="50">50%</option>
-                                <option value="25">25%</option>
-                                <option value="20">20%</option>
-                            </select>
-                        </div>
-                    </div>
+                    <div id="result">
+						<div class="form-group" style="display: block;">
+							<label class="col-sm-4 control-label" for="cuotas">Tiempo en Meses</label>
+							<div class="col-sm-8">
+								<input class="form-control" readonly="readonly" id="cuotas" type="number">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="montomax">Monto Maximo</label>
+							<div class="col-sm-8">
+								<input class="form-control" placeholder="Monto Maximo" readonly="readonly" id="montomax" type="number">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="tasa">Tasa de Interes</label>
+							<div class="col-sm-8">
+								<input class="form-control" placeholder="Tasa de Interes" readonly="readonly" id="tasa" type="number">
+							</div>
+						</div>
+					</div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="solicitud_Disponibilidad">Disponibilidad</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" placeholder="Disponibilidad" readonly="readonly" value="82.529,00 Bs" id="disp_f" type="text" name="solicitud[Disponibilidad_f]">
-                            <input value="82529" id="disp_i" type="hidden" name="solicitud[Dispo1nibilidad_i]">
-                            <input class="form-control" placeholder="Disponibilidad" readonly="readonly" value="82529" id="disponibilidad" type="hidden" name="solicitud[Disponibilidad]"> </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="solicitud_Monto">Monto</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" placeholder="Monto" id="monto" type="text" name="solicitud[monto]"> </div>
+                        <label class="col-sm-4 control-label" for="montosol">Monto</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" placeholder="Monto" id="montosol" type="number" onchange="verificar();">
+						</div>
+						<div class="col-sm-1">
+                            <a href="javascript:void(0);" class="badge bg-orange"><i class="glyphicon glyphicon-ok" style="color: green"></i></a>
+                    	</div>                   
                     </div>
                     <div class="form-group" id="monto_cuotas" style="display: block;">
-                        <label class="col-sm-4 control-label" for="solicitud_Monto por cuota">Monto por cuota</label>
+                        <label class="col-sm-4 control-label" for="monto_cuota">Monto por cuota</label>
                         <div class="col-sm-8">
-                            <input class="form-control" placeholder="Monto por cuota" id="monto_cuota" type="text" name="solicitud[monto_cuota]">
-                            <input class="form-control" id="monto_cuota_h" type="hidden" name="solicitud[monto_cuota_h]"> </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="solicitud_Observaciones">Observaciones</label>
+                            <input class="form-control" placeholder="Monto por cuota" id="monto_cuota" type="number" readonly>
+                    	</div>
+					</div>
+					<div class="form-group" style="display: block;">
+                        <label class="col-sm-4 control-label" for="total">Monto Total</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" placeholder="Observaciones" id="idobservacion" name="solicitud[observations]"></textarea>
-                        </div>
-                    </div>
+                            <input class="form-control" placeholder="Total a Cancelar" id="total" type="number" readonly>
+                    	</div>
+					</div>
                     <div class="box-footer">
-                        <input type="submit" name="commit" value="Enviar Solicitud" class="btn btn-primary col-md-offset-5 subsolicitud"> </div>
+                        <input id="enviar" type="button" value="Enviar Solicitud" class="btn btn-primary col-md-offset-5 collapse" onclick="
+                            $.ajax({
+								url:'accion.php',
+								type:'POST',
+								data:{
+									dmn 	: <?php echo $idMenut;?>,
+									tipo 	: $('#tipsol').val(),
+									monto 	: $('#montosol').val(),
+									ver 	: 2
+								},
+								success : function (html) {
+									$('#page-content').html(html);
+								},
+							}); return false;"> 
+                    </div>
                 </form>
             </div>
         </div>
@@ -102,68 +117,57 @@
     <div class="row">
         <div class="box box-solid box-warning">
             <div class="box-header">
-                <h3 class="box-title">Prestamos Activos</h3> </div>
+                <h3 class="box-title">Solicitudes Realizadas</h3> </div>
             <div class="col-xs-12 box-body table-responsive no-padding">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td colspan="2" align="center"><strong>Cancelado</strong></td>
-                            <td colspan="2" align="center"><strong>Pendiente</strong></td>
-                        </tr>
-                    </thead>
-                    <thead>
-                        <tr>
-                            <td align="right"><strong>Prestamo</strong></td>
-                            <td><strong>Tipo de Prestamo</strong></td>
-                            <td align="right"><strong>Fecha</strong></td>
-                            <td align="right"><strong>Monto</strong></td>
-                            <td align="right"><strong>Normal</strong></td>
-                            <td align="right"><strong>Especial</strong></td>
-                            <td align="right"><strong>Normal</strong></td>
-                            <td align="right"><strong>Especial</strong></td>
+                            <td class="text-center"><strong>Solicitud</strong></td>
+                            <td class="text-center"><strong>Tipo de Prestamo</strong></td>
+                            <td class="text-center"><strong>Fecha</strong></td>
+                            <td class="text-center"><strong>Monto</strong></td>
+                            <td class="text-center"><strong>Estado</strong></td>
+                            <td class="text-center"><strong>Cancelar</strong></td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td align="right">6857</td>
-                            <td> <a href="/users/3046/loans/36857">
-                                    Mediano Plazo
-</a> </td>
-                            <td align="right">23-JUL-2015</td>
-                            <td align="right">18.400,00 </td>
-                            <td align="right">12.156,63 </td>
-                            <td align="right">0,00 </td>
-                            <td align="right">7.767,62 </td>
-                            <td align="right">0,00 </td>
-                        </tr>
-                        <tr>
-                            <td align="right">4269</td>
-                            <td> <a href="/users/3046/loans/34269">
-                                    Especial
-</a> </td>
-                            <td align="right">19-JUL-2013</td>
-                            <td align="right">9.100,00 </td>
-                            <td align="right">11.694,85 </td>
-                            <td align="right">0,00 </td>
-                            <td align="right">653,85 </td>
-                            <td align="right">0,00 </td>
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td><strong>Total prestamos que afectan disponibilidad</strong></td>
-                            <td></td>
-                            <td align="right"><strong>27.500,00 </strong></td>
-                            <td align="right"><strong>23.851,48 </strong></td>
-                            <td align="right"><strong>0,00 </strong></td>
-                            <td align="right"><strong>8.421,47 </strong></td>
-                            <td align="right"><strong>0,00 </strong></td>
-                        </tr>
+                        	<?php
+								$consulsol = paraTodos::arrayConsulta("sp.ID, tp.NAME, sp.FECHA, sp.MONTO, sp.ESTATUS", "solict_prest sp, tp_prest tp", " sp.TP_PREST=tp.ID and CEDULA=$_SESSION[ci] and sp.ESTATUS<>'ELIMINADO'");
+								foreach($consulsol as $row){
+							?>
+                        <tr>							
+								<td class="text-center"><?php echo $row[ID];?></td>
+								<td class="text-center"><?php echo $row[NAME];?></td>
+								<td class="text-center"><?php echo $row[FECHA];?></td>
+								<td class="text-center"><?php echo $row[MONTO];?></td>
+								<td class="text-center"><?php echo $row[ESTATUS];?></td>
+								<td class="text-center">								
+								<?php
+									if($row[ESTATUS] == 'EN PROCESO'){
+								?>
+									<a href="javascript:void(0);" onclick="$.ajax({
+								url:'accion.php',
+								type:'POST',
+								data:{
+									dmn 	: <?php echo $idMenut;?>,
+									codigo 	: <?php echo $row[ID];?>,
+									eliminar : 1,
+									ver 	: 2
+								},
+								success : function (html) {
+									$('#page-content').html(html);
+								},
+							}); return false;"><i class="glyphicon glyphicon-minus
+ btn-xs"></i>
+									</a>
+							<?php
+									}
+								?>
+								</td>
+                        </tr>                        								
+							<?php
+								}
+							?>
                     </tbody>
                 </table>
             </div>
@@ -172,3 +176,21 @@
     </div>
     <!-- /.row -->
 </section>
+<script>
+	function verificar(){
+		if(parseFloat($("#montosol").val())>parseFloat($("#montomax").val())){
+			$("#alerta-msg").fadeIn(1000);
+			$("#alerta-msg").removeClass("collapse");
+			$("#alert-msg").html("Monto Solicitado Excede el Monto Maximo");
+			$("#enviar").addClass("collapse");			
+			$("#total").val('');
+			$("#monto_cuota").val('');
+		} else {
+			$("#alerta-msg").fadeOut(1000);
+			$("#alerta-msg").addClass("collapse");			
+			$("#enviar").removeClass("collapse");
+			$("#total").val(parseFloat($("#montosol").val())+(parseFloat($("#montosol").val()*($("#tasa").val()/100))));
+			$("#monto_cuota").val(parseFloat($("#montosol").val())/parseFloat($("#cuotas").val()));
+		}
+	}
+</script>
