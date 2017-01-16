@@ -20,13 +20,13 @@ $foot_page      = ".:: Aplicaci&oacute;n Web ::: fonjuprof - SISTEMA ::.";
 $host_system    = "";
 $auth_table     = 'usuarios'; // Nombre de la tabla que contendra los datos de los usuarios
 $usuarios_sesion = 'the_name_session';
-$redir          = 'http://karpofv.ddns.net/fonjuprof/index.php';
-$ruta_base      = '//karpofv.ddns.net/fonjuprof/';
+$redir          = 'http://localhost/fonjuprof/index.php';
+$ruta_base      = '//localhost/fonjuprof/';
 // Configuracion de Modulos Activos en en Sistema (0:Inactivo, 1:Activo)
 $mod_moodle  = 0;
 //Mod Chat
 global $absolute_uri;
-$absolute_uri   = 'http://karpofv.ddns.net/fonjuprof/';
+$absolute_uri   = 'http://localhost/fonjuprof/';
 $mod_chat       = 1;
 // Mensajes de error.
 $ruta_upload = $ruta_base."includes/uploads/";

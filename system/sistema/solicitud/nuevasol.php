@@ -46,7 +46,8 @@
 								success : function (html) {
 									$('#result').html(html);
 								},
-							});">                                
+							});"> 
+                                <option value="0">Seleccione tipo de Prestamo</option>
                             <?php
 								combos::CombosSelect(1, "ID", "*", "tp_prest", "ID", "NAME", "MTO_MAX>0");
 								?>

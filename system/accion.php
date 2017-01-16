@@ -34,6 +34,7 @@
     include_once('modelo/menu/class.menu.php');
     include_once('modelo/usuarios/class.usuarios.php');
     include_once('modelo/prestamos/class.prestamos.php');
+    include_once('modelo/notificacion/class.notif.php');
 
     $consultasMenu = new paraTodos();
 
@@ -121,6 +122,19 @@
     }
 
     ?>
+<script>
+    $.ajax({
+        url:'recargar.php',
+		type:'POST',
+		data:{
+            dmn 	: 355,
+            ver     : 1
+		},
+		success : function (html) {
+		  $('#notificaciones').html(html);
+		},
+    });
+</script>
   <script type="text/javascript">
     var cargando = '<center><img style="margin-top: 10px;height:30px;width:30px;" src="../assets/img/ajax-loader.gif" border="0"> Esto tomará algunos minutos</center>';
   </script>

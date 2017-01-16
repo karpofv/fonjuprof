@@ -46,3 +46,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 includes/conf/auth.php
+/includes/conf/general_parameters.php
+/includes/conf/db.php

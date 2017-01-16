@@ -15,6 +15,7 @@
     include_once('../includes/tools.php');
     include_once('../includes/conexion.php');
     include_once('modelo/class.consultas.php');
+    include_once('modelo/notificacion/class.notif.php');
     $consultasPermiso = new paraTodos();
     $consultas = new Consultas();
     $res_ = $consultasPermiso->arrayConsulta("Nivel", "usuarios", "Cedula=$_SESSION[ci]");
