@@ -16,8 +16,12 @@ body {
   overflow-x: hidden!important;
   -webkit-font-smoothing: antialiased;
   min-height: 100%;
-  background: #f9f9f9;
+  background: #425968;
 }
+.title-login{
+    font-family: 'Sansita One', cursive;
+    font-size: 55px;
+    color: white;}
 a {
   color: #3c8dbc;
 }
@@ -228,7 +232,7 @@ img {
 }
 /* Text colors */
 .text-red {
-  color: #f56954 !important;
+  color: #cac4c4 !important;
 }
 .text-yellow {
   color: #f39c12 !important;
@@ -653,7 +657,7 @@ body > .header .logo .icon {
 .navbar-nav > .notifications-menu > .dropdown-menu,
 .navbar-nav > .messages-menu > .dropdown-menu,
 .navbar-nav > .tasks-menu > .dropdown-menu {
-  width: 280px;
+  width: 880px;
   padding: 0 0 0 0!important;
   margin: 0!important;
   top: 100%;
@@ -677,10 +681,10 @@ body > .header .logo .icon {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-  background-color: #ffffff;
+  background-color: #333;
   padding: 7px 10px;
   border-bottom: 1px solid #f4f4f4;
-  color: #444444;
+  color: #f6f6f6;
   font-size: 14px;
 }
 .navbar-nav > .notifications-menu > .dropdown-menu > li.header:after,
@@ -765,7 +769,7 @@ body > .header .logo .icon {
   margin-right: 5px;
   /* Default background and font colors */
 
-  background: rgba(243, 156, 18, 0.25);
+  background: rgb(51, 51, 51);
   color: #f9f9f9;
   /* Fallback for browsers that doesn't support rgba */
 
@@ -1844,7 +1848,7 @@ Component: timeline
 }
 .btn.btn-file {
   position: relative;
-  width: 120px;
+  width: 190px;
   height: 35px;
   overflow: hidden;
 }

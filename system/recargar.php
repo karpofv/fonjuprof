@@ -122,6 +122,3 @@
     }
 
     ?>
-  <script type="text/javascript">
-    var cargando = '<center><img style="margin-top: 10px;height:30px;width:30px;" src="../assets/img/ajax-loader.gif" border="0"> Esto tomará algunos minutos</center>';
-  </script>

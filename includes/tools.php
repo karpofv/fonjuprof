@@ -79,7 +79,7 @@ class paraTodos
     {
         if ($msg<>'') {
             ?>
-            <div class="<?php echo $type ?>" style="margin-top: 10px;width: 90%;">
+            <div class="<?php echo $type ?>" id="alerta-msg">
             <a class="close" data-dismiss="alert">&times;</a>
             <strong>Accion!</strong> <?php echo $msg ?>
             </div>

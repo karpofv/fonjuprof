@@ -73,7 +73,7 @@
     if ($_POST[ver]=='' or $_GET[ver]==0) {
         $bMenu='menu_emp_sub';
     }
-    if ($_POST[ver]=='2') {
+    if ($_POST[ver]=='2' or $_GET[ver]=='2') {
         $bMenu='m_menu_emp_sub_menj';
     }
     $res_ = $consultasMenu->arrayConsulta("Url_1,Url_2,Url_3,Url_4,Url_5,Url_6,Url_7,Url_8,Url_9,Url_10", "$bMenu", "id=$idMenut");

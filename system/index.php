@@ -2,7 +2,6 @@
     $confInv = $_GET["confInv"];
     ini_set('display_errors', false);
     ini_set('display_startup_errors', false);
-
     require("../includes/conf/auth.php");
     $Quien = $_SESSION['usuario_nivel'];
     if ($_SESSION['usuario_nivel'] != 'Empleado') {
@@ -26,3 +25,4 @@
     }
     header("Location: accion.php");
     include_once($ruta_base."includes/layout/footer.php");
+?>

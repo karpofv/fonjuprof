@@ -8,6 +8,19 @@
     public function registrarUsuario($cedula,$usuario,$contrasena,$tipo,$registro){
       $conexion = new Conexion;
       $conectar = $conexion->obtenerConexionMy();
+        $nivel = "select count(cedula) as cuenta from registrados where cedula=:Cedula";
+        $preparar = $conectar->prepare($nivel);
+        $preparar->bindValue(':Cedula',$cedula);
+        $preparar->execute();
+        $resultado = $preparar->fetchAll();
+        foreach($resultado as $res_){
+            $cuenta = $res_[cuenta];
+        }
+        if ($cuenta>0){
+            $nivel = 2;
+        } else {
+            $nivel = 3;
+        }
       $sql = "INSERT INTO usuarios (Cedula, Usuario, contrasena, Tipo, Nivel, Registro, Fecha) VALUES (:Cedula,:Usuario,:contrasena,:Tipo,:Nivel,:Registro,now())";
 
 
@@ -16,7 +29,7 @@
       $preparar->bindValue(':Usuario',$usuario);
       $preparar->bindValue(':contrasena',$contrasena);
       $preparar->bindValue(':Tipo',$tipo);
-      $preparar->bindValue(':Nivel','2');
+      $preparar->bindValue(':Nivel',$nivel);
       $preparar->bindValue(':Registro','1');
 
       if (!$preparar) {
@@ -44,14 +57,16 @@
     public function comprobarCedulaAsoc($cedula){
       $conexion = new Conexion;
       $conectar = $conexion->obtenerConexionMy();
-       $sql = "SELECT * FROM asoc WHERE CEDULA = '$cedula'";
-
+      $sql = "SELECT * FROM asoc WHERE CEDULA = '$cedula'";
       $preparar = $conectar->prepare($sql);
       $preparar->execute();
-
       $num_row = $preparar->fetchAll();
+		$sql = "SELECT * FROM registrados WHERE cedula = $cedula";
+      $prepararrg = $conectar->prepare($sql);
+      $prepararrg->execute();
+      $num_rowrg = $prepararrg->fetchAll();
 
-      if (count($num_row) > 0) {
+      if (count($num_row) > 0 || count($num_rowrg) > 0) {
         return true;
       }else {
         return false;
@@ -87,5 +102,32 @@
       $array = $preparar->fetch(PDO::FETCH_ASSOC);
       return $array;
     }
+	public function TotalPrestamo(){
+		$cedula = $_SESSION[ci];
+		$deuda = paraTodos::arrayConsulta("sum(SOLICITADO) as solicitado", "prest", "CEDULA=$cedula");
+		foreach($deuda as $row){
+			$totdeuda = $row[solicitado];
+		}
+		echo number_format ( $totdeuda,2, ',','.' );
+	}
+	 public function Deudas(){
+		$cedula = $_SESSION[ci];
+		$deuda = paraTodos::arrayConsulta("min(an.RESTA) as resta", "amort_nor an, prest p", "an.PREST=p.ID and p.CEDULA=$cedula and an.RESTA>0
+group by an.PREST
+order by an.RESTA asc");
+		 $totdeuda = 0;
+		 foreach($deuda as $row){
+			$totdeuda = $totdeuda+$row[resta];
+		 }
+		echo number_format ( $totdeuda,2, ',','.' );
+	 }
+	  public function Cuotas(){
+		$cedula = $_SESSION[ci];
+		$deuda = paraTodos::arrayConsulta("count(an.PREST) as cuotas ", "amort_nor an, prest p", "an.PREST=p.ID and p.CEDULA= $cedula and an.CANC=0");
+		foreach($deuda as $row){
+			$totdeuda = $row[cuotas];
+		}
+		echo $totdeuda;
+	 }
   }
  ?>

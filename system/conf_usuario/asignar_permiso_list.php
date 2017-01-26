@@ -1,19 +1,19 @@
 <?php
-if ($accPermisos['S']==1) {
+if ($permiso_accion['S']==1) {
 if ($_POST[Estado]!='' AND $_POST[Municipio]!='' AND $_POST[Parroquia]!='' AND $_POST[CedulaPerm]!='' AND $_POST[bb]!='') {
-    $Mody=Acciones::InsertarPerilEncuestado($permiso, "usuarios_perm_estad", "CedulaEmp,Estado,Fecha", "'$_POST[CedulaPerm]','$_POST[Estado]',Now()", $idsubmenu, $accPermisos);
+    $Mody=Acciones::InsertarPerilEncuestado($permiso, "usuarios_perm_estad", "CedulaEmp,Estado,Fecha", "'$_POST[CedulaPerm]','$_POST[Estado]',Now()", $idsubmenu, $permiso_accion);
     if ($Mody=='True') {
-        //Acciones::InsertarPerilEncuestado($permiso, "auditar_planilla", "CedulaEmp,CedulaPers,Accion,Fecha,Hora", "'$cedulaEmp','$_POST[Cedula]','Inserto Bodega',Now(),Now()", $idsubmenu, $accPermisos);
+        //Acciones::InsertarPerilEncuestado($permiso, "auditar_planilla", "CedulaEmp,CedulaPers,Accion,Fecha,Hora", "'$cedulaEmp','$_POST[Cedula]','Inserto Bodega',Now(),Now()", $idsubmenu, $permiso_accion);
         $ejecucion = 1;
     }
-    $Mody=Acciones::InsertarPerilEncuestado($permiso, "usuarios_perm_munic", "CedulaEmp,Municipio,Fecha", "'$_POST[CedulaPerm]','$_POST[Municipio]',Now()", $idsubmenu, $accPermisos);
+    $Mody=Acciones::InsertarPerilEncuestado($permiso, "usuarios_perm_munic", "CedulaEmp,Municipio,Fecha", "'$_POST[CedulaPerm]','$_POST[Municipio]',Now()", $idsubmenu, $permiso_accion);
     if ($Mody=='True') {
-        //Acciones::InsertarPerilEncuestado($permiso, "auditar_planilla", "CedulaEmp,CedulaPers,Accion,Fecha,Hora", "'$cedulaEmp','$_POST[Cedula]','Inserto Bodega',Now(),Now()", $idsubmenu, $accPermisos);
+        //Acciones::InsertarPerilEncuestado($permiso, "auditar_planilla", "CedulaEmp,CedulaPers,Accion,Fecha,Hora", "'$cedulaEmp','$_POST[Cedula]','Inserto Bodega',Now(),Now()", $idsubmenu, $permiso_accion);
         $ejecucion = 1;
     }
-    $Mody=Acciones::InsertarPerilEncuestado($permiso, "usuarios_perm_parroq", "CedulaEmp,Parroquia,Fecha", "'$_POST[CedulaPerm]','$_POST[Parroquia]',Now()", $idsubmenu, $accPermisos);
+    $Mody=Acciones::InsertarPerilEncuestado($permiso, "usuarios_perm_parroq", "CedulaEmp,Parroquia,Fecha", "'$_POST[CedulaPerm]','$_POST[Parroquia]',Now()", $idsubmenu, $permiso_accion);
     if ($Mody=='True') {
-        //Acciones::InsertarPerilEncuestado($permiso, "auditar_planilla", "CedulaEmp,CedulaPers,Accion,Fecha,Hora", "'$cedulaEmp','$_POST[Cedula]','Inserto Bodega',Now(),Now()", $idsubmenu, $accPermisos);
+        //Acciones::InsertarPerilEncuestado($permiso, "auditar_planilla", "CedulaEmp,CedulaPers,Accion,Fecha,Hora", "'$cedulaEmp','$_POST[Cedula]','Inserto Bodega',Now(),Now()", $idsubmenu, $permiso_accion);
         $ejecucion = 1;
     }
 }

@@ -59,9 +59,6 @@ if (isset($_POST['user']) && isset($_POST['pass']) && ($_POST['user']!='') && ($
             Header("Location: $redir?error_login=3");
             exit;
         }
-        unset($login);
-        unset($password);
-        session_name($sess_name);
         session_start();
         session_cache_limiter('nocache,private');
         $_SESSION['usuario_nivel'] = $usuario_datos['Tipo'];
@@ -85,7 +82,6 @@ if (isset($_POST['user']) && isset($_POST['pass']) && ($_POST['user']!='') && ($
         exit;
     }
 } else {
-    session_name($sess_name);
     session_start();
     $auth['S']=1;
     $auth['I']=1;

@@ -35,8 +35,9 @@
 <!-- AdminLTE App -->
 <script src="<?php echo $ruta_base;?>assets/js/AdminLTE/app.js" type="text/javascript"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="<?php echo $ruta_base;?>assets/js/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
-<script src="<?php echo $ruta_base;?>assets/js/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<script src="<?php echo $ruta_base;?>assets/widgets/datatable/js/jquery.dataTables.js" type="text/javascript"></script>
+<script src="<?php echo $ruta_base;?>assets/widgets/datatable/js/buttons.print.min.js" type="text/javascript"></script>
+<script src="<?php echo $ruta_base;?>assets/widgets/datatable/js/dataTables.buttons.min.js" type="text/javascript"></script>
 </body>
 
 </html>

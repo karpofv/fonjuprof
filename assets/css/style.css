@@ -1,4 +1,52 @@
+
 #alerta-msg {
-	margin-top: 60px;
-	margin-bottom: -20px;
+    margin-top: 60px;
+    height: 50px;
+    padding: 15px;
+    border-radius: 10px;
+}
+.p-datosp {
+    color: #666;
+    padding: 5px;
+    border-radius: 8px;
+    border-bottom: solid;
+    border-color: rgba(243, 156, 18, 0.44);
+}
+#ventanaVer {
+	position: absolute;
+    z-index: 2000;
+    width: 100%;
+}
+
+.ventana-modal {
+	background-color: rgba(0, 0, 0, 0.50);
+	height: 1000px;
+    animation-name: fadeAnimation;
+    animation-duration: .7s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    -webkit-animation-name: fadeAnimation;
+    -webkit-animation-duration: .7s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-name: fadeAnimation;
+    -moz-animation-duration: .7s;
+    -moz-animation-iteration-count: 1;
+    -moz-animation-timing-function: ease;
+    -moz-animation-fill-mode: forwards;
+}
+
+.content-archivo {
+	margin-top: 20px;
+	padding: 5px;
+	background-color: rgba(239, 239, 239, 0.24);
+	height: 300px;
+	border-left: solid;
+	border-color: #666;
+}
+
+#foto-actual img {
+	max-height: 300px;
 }

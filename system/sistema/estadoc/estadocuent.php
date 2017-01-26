@@ -1,23 +1,42 @@
 
 <?php
 	include_once("modelo/estadocuenta/class.estadoc.php");
-	$datos = paraTodos::arrayConsulta("*", "asoc", " CEDULA=$_SESSION[ci]");
-	foreach ($datos as $row){
-		$nombre = $row[NAME];
-		$codigo = $row[CODIGO];
-		$ingreso = $row[INGRESO];
-		$ubicacion = $row[ORIGEN];
+	$consuldper = paraTodos::arrayConsultanum("*", "datos_per", "datp_cedula=$_SESSION[ci]");
+	if ($consuldper>0){
+		$consul = paraTodos::arrayConsulta("*", "datos_per dp, vicerrectorado v, condicion c", " dp.datp_viccodigo=v.vic_codigo and dp.datp_condcodigo=c.cond_codigo and datp_cedula=$_SESSION[ci]");
+		foreach($consul as $row){
+			$codigo = $datosPersonales[CODIGO];
+			$cedula = $row[datp_cedula];
+			$name = $row[datp_nombres]." ".$row[datp_apellidos];
+			$telefono = $row[datp_telefono];
+			$correo = $row[datp_correo];
+			$ingreso = $row[datp_fecing];
+			$fecnac = $row[datp_fecnac];
+			$origen = $row[vic_descripcion];
+			$condicion = $row[cond_descripcion];
+			$direc = $row[datp_direccion];
+		}
+	} else {
+			$codigo = $datosPersonales[CODIGO];
+			$cedula = $datosPersonales[CEDULA];
+			$name = $datosPersonales[NAME];
+			$telefono = $datosPersonales[TELEFONO];
+			$correo = $datosPersonales[CORREO];
+			$ingreso = $datosPersonales[INGRESO];
+			$origen = $datosPersonales[ORIGEN];
+			$fecnac = 'No actualizada';
+			$direc = 'No actualizada';
 	}
 ?>
 <section class="content invoice">
     <!-- title row -->
     <div class="row invoice-info">
-        <div class="col-sm-4 invoice-col"> <b>Asociado:</b> <?php echo $_SESSION[ci];?> - <?php echo $nombre;?>
-            <br> <b>Ubicación:</b> <?php echo $ubicacion;?></div>
+        <div class="col-sm-4 invoice-col"> <b>Asociado:</b> <?php echo $cedula;?> - <?php echo $name;?>
+            <br> <b>Ubicación:</b> <?php echo $origen;?> - <?php echo $condicion;?></div>
         <div class="col-sm-4 invoice-col" align="center">
-            <br> <b>Código:</b> <?php echo $codigo; ?></div>
+            <br> <b>Código:</b> <?php echo $codigo; ?> </div>
         <div class="col-sm-4 invoice-col">
-            <br> <b>Fecha de Ingreso:</b> <?php echo $ingreso; ?></div>
+            <br> <b>Fecha de Ingreso:</b> <?php echo paraTodos::convertDate($ingreso); ?></div>
     </div>    
     <hr>
     <div class="" id="estado_content">
