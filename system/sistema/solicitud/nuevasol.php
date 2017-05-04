@@ -1,4 +1,5 @@
 <?php
+	$cuenta = 2;
 	$tipo = $_POST['tipo'];
 	$monto = $_POST['monto'];
 	$amort = $_POST['amort'];
@@ -92,7 +93,7 @@ where s.CEDULA=dp.datp_cedula and dp.datp_viccodigo=$vicec and s.ESTATUS<>'RECHA
                             </select>
                         </div>
                     </div>
-                    <div id="result">
+                    <div id="result">						
 						<div class="form-group">
 							<label class="col-sm-4 control-label" for="montomax">Monto Maximo</label>
 							<div class="col-sm-8">
@@ -112,14 +113,14 @@ where s.CEDULA=dp.datp_cedula and dp.datp_viccodigo=$vicec and s.ESTATUS<>'RECHA
                     <div class="form-group" id="loantype" style="display: block;">
                         <label class="col-sm-4 control-label" for="amort">Forma de pago</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="amort">
+                            <select class="form-control" id="amort"> 
                                 <option value="0">Seleccione la forma de pago</option>
                             <?php
 								combos::CombosSelect(1, "$amort", "amort_codigo, amort_descripcion", "amort", "amort_codigo", "amort_descripcion", "1=1");
 								?>
                             </select>
                         </div>
-                    </div>
+                    </div>                    
                     <div class="box-footer">
                         <input id="enviar" type="button" value="Enviar Solicitud" class="btn btn-primary col-md-offset-5 collapse" onclick="
                             $.ajax({
@@ -140,10 +141,10 @@ where s.CEDULA=dp.datp_cedula and dp.datp_viccodigo=$vicec and s.ESTATUS<>'RECHA
                 </form>
                 <?php
 						} else {
-							paraTodos::showMsg("Debe actualizar sus datos antes de realizar una nueva solicitud.", "alert-danger");
+							paraTodos::showMsg("Debe actualizar sus datos antes de realizar una nueva solicitud.", "alert-danger");	
 						}
 					} else {
-						paraTodos::showMsg("Debe actualizar sus datos antes de realizar una nueva solicitud.", "alert-danger");
+						paraTodos::showMsg("Debe actualizar sus datos antes de realizar una nueva solicitud.", "alert-danger");	
 					}
 				?>
             </div>
@@ -157,13 +158,12 @@ where s.CEDULA=dp.datp_cedula and dp.datp_viccodigo=$vicec and s.ESTATUS<>'RECHA
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <td class="text-center"><strong>Solicitud</strong></td>
                             <td class="text-center"><strong>Tipo de Prestamo</strong></td>
                             <td class="text-center"><strong>Fecha</strong></td>
                             <td class="text-center"><strong>Monto</strong></td>
                             <td class="text-center"><strong>Form. Pago</strong></td>
                             <td class="text-center"><strong>Estado</strong></td>
-                            <td class="text-center"><strong>Cancelar</strong></td>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -172,35 +172,11 @@ where s.CEDULA=dp.datp_cedula and dp.datp_viccodigo=$vicec and s.ESTATUS<>'RECHA
 								foreach($consulsol as $row){
 							?>
                         <tr>							
-								<td class="text-center"><?php echo $row[ID];?></td>
 								<td class="text-center"><?php echo $row[NAME];?></td>
 								<td class="text-center"><?php echo paraTodos::convertDate($row[FECHA]);?></td>
 								<td class="text-center"><?php echo number_format ( $row[MONTO],2, ',','.' );?></td>
 								<td class="text-center"><?php echo $row[amort_descripcion];?></td>
 								<td class="text-center"><?php echo $row[ESTATUS];?></td>
-								<td class="text-center">								
-								<?php
-									if($row[ESTATUS] == 'EN PROCESO'){
-								?>
-									<a href="javascript:void(0);" onclick="$.ajax({
-								url:'accion.php',
-								type:'POST',
-								data:{
-									dmn 	: <?php echo $idMenut;?>,
-									codigo 	: <?php echo $row[ID];?>,
-									eliminar : 1,
-									ver 	: 2
-								},
-								success : function (html) {
-									$('#page-content').html(html);
-								},
-							}); return false;"><i class="glyphicon glyphicon-minus
- btn-xs"></i>
-									</a>
-							<?php
-									}
-								?>
-								</td>
                         </tr>                        								
 							<?php
 								}

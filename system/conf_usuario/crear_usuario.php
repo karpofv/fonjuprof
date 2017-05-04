@@ -129,6 +129,7 @@
                             <td class="text-center"><strong>Nombre y Apellido</strong></td>
                             <td class="text-center"><strong>Usuario</strong></td>
                             <td class="text-center"><strong>Tipo</strong></td>
+                            <td class="text-center"><strong>Camb. Contraseña</strong></td>
                             <td class="text-center"><strong>Editar</strong></td>
                             <td class="text-center"><strong>Eliminar</strong></td>
                         </tr>
@@ -143,6 +144,22 @@
 								<td class="text-center"><?php echo utf8_decode($row[Nombres]." ".$row[Apellidos]);?></td>
 								<td class="text-center"><?php echo utf8_decode($row[Usuario]) ;?></td>
                                 <td class="text-center">Operador</td>
+                                <td class="text-center">
+									<a href="javascript:void(0);" onclick="$.ajax({
+								url:'accion.php',
+								type:'POST',
+								data:{
+									dmn 	: <?php echo $idMenut;?>,
+									cedula 	: <?php echo $row[CEDULA];?>,
+                                    act: 2,
+									ver 	: 2
+								},
+								success : function (html) {
+									$('#ventanaVer').html(html);
+								},
+							}); return false;"><i class="fa fa-key"></i>
+									</a>
+								</td>                            
 								<td class="text-center">
 									<a href="javascript:void(0);" onclick="$.ajax({
 								url:'accion.php',
@@ -189,6 +206,22 @@
 								<td class="text-center"><?php echo $row[NAME];?></td>
 								<td class="text-center"><?php echo $row[Usuario];?></td>
 								<td class="text-center">Asociado</td>
+                                <td class="text-center">
+									<a href="javascript:void(0);" onclick="$.ajax({
+								url:'accion.php',
+								type:'POST',
+								data:{
+									dmn 	: <?php echo $idMenut;?>,
+									cedula 	: <?php echo $row[CEDULA];?>,
+                                    act: 2,
+									ver 	: 2
+								},
+								success : function (html) {
+									$('#ventanaVer').html(html);
+								},
+							}); return false;"><i class="fa fa-key"></i>
+									</a>
+								</td>                            
 								<td class="text-center">
 									<a href="javascript:void(0);" onclick="$.ajax({
 								url:'accion.php',
